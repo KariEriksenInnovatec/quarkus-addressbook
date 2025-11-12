@@ -23,6 +23,8 @@ public final class Adressebok {
 
     public Kontakt opprettKontakt(KontaktId id, KontaktData data) {
 
+        // Genererer id
+
         Kontakt nyKontakt = opprettKontakt(id, data);
         kontakter.add(nyKontakt);
 

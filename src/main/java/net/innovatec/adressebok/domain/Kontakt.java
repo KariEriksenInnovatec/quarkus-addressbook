@@ -24,7 +24,7 @@ public class Kontakt {
 
         // Sjekker om det opprettes flere enn 2 adresser på en kontakt
         // Se domenemodellen
-        if (data.adresser().size() == 2)
+        if (data.adresser().size() >= 2)
             throw new RuntimeException("Ikke lov å opprette mer enn 2 adresser.");
         if (!data.adresser().isEmpty() && data.adresser().getFirst().adresseType() == adresseType)
             throw new RuntimeException("Ikke lov med to adresser av samme type.");
@@ -64,7 +64,7 @@ public class Kontakt {
 
     public Telefon opprettTelefon(TelefonType telefonType, String telefonnummer) {
 
-        if (data.telefon().size() == 10)
+        if (data.telefon().size() >= 10)
             throw new RuntimeException("Ikke lov å opprette mer enn 10 telefonnummer.");
 
         Telefon nyTelefon = opprettTelefon(telefonType, telefonnummer);
