@@ -1,20 +1,11 @@
-<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><element><id>UMLClass</id><coordinates><x>567</x><y>657</y><w>225</w><h>117</h></coordinates><panel_attributes>&lt;&lt;Aggregate&gt;&gt;
-KontaktData
---
-- navn: Navn
-- adresser: List&lt;Adresse&gt;
-- epost: List&lt;Epost&gt;
-- telefon: List&lt;Telefon&gt;
-
-bg=cyan
-//fornavn + etternavn må være unikt</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>486</x><y>135</y><w>387</w><h>189</h></coordinates><panel_attributes>&lt;&lt;Aggregate Root&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>11</zoom_level><element><id>UMLClass</id><coordinates><x>319</x><y>77</y><w>473</w><h>231</h></coordinates><panel_attributes>&lt;&lt;Aggregate Root&gt;&gt;
 Adressebok
 --
 - id: AdressebokId
 - kontaker: List &lt;Kontakt&gt;
 
 --
-+ opprettKontakt(id: KontaktId, data: KontaktData): Kontakt
++ opprettKontakt(id: KontaktId, kontakt: Kontakt): Kontakt
 + henteKontakt(id: KontaktId): Kontakt
 + oppdatereKontakt(kontakt: Kontakt): Boolean
 + slettKontakt(kontakt: Kontakt): Boolean
@@ -22,9 +13,9 @@ Adressebok
 + søkKontakt(navn: Navn): List&lt;Kontakt&gt;
 
 
-bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>315</y><w>45</w><h>99</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>297</y><w>55</w><h>121</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
-m2=0..n</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>387</x><y>882</y><w>171</w><h>117</h></coordinates><panel_attributes>Adresse
+m2=0..n</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>198</x><y>814</y><w>209</w><h>143</h></coordinates><panel_attributes>Adresse
 --
 - adresseType: AdresseType
 - gatenavn: String
@@ -33,56 +24,55 @@ m2=0..n</panel_attributes><additional_attributes>10;10;10;90</additional_attribu
 - by: String
 - land: String
 //"validers med regex"
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>612</x><y>882</y><w>153</w><h>63</h></coordinates><panel_attributes>Epost
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>462</x><y>814</y><w>187</w><h>77</h></coordinates><panel_attributes>Epost
 --
 - epostAdresse: String
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>819</x><y>882</y><w>162</w><h>81</h></coordinates><panel_attributes>Telefon
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>814</y><w>198</w><h>99</h></coordinates><panel_attributes>Telefon
 --
 - telefonType: TelefonType
 - teleonnummer: String
 //"validers med regex"
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>468</x><y>765</y><w>243</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>671</y><w>319</w><h>165</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
-{minst en må opprettes}
-m2=0..2
-</panel_attributes><additional_attributes>240;10;240;80;10;80;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>765</y><w>261</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m2=0..10</panel_attributes><additional_attributes>10;10;10;80;250;80;250;130</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>671</y><w>55</w><h>165</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
-m2=0..10</panel_attributes><additional_attributes>10;10;10;80;250;80;250;130</additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>765</y><w>45</w><h>135</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m1=1
-m2=0..3</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>387</x><y>1044</y><w>171</w><h>81</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+m2=0..3</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>198</x><y>1001</y><w>209</w><h>99</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
 AdresseType
 --
 + Privat
 + Jobb
-//"validers med regex"
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>468</x><y>990</y><w>27</w><h>72</h></coordinates><panel_attributes>lt=-&gt;
-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>819</x><y>1035</y><w>162</w><h>90</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+//"valideres med regex"
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>297</x><y>946</y><w>33</w><h>77</h></coordinates><panel_attributes>lt=-&gt;
+</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>957</y><w>198</w><h>110</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
 TelefonType
 --
 + Privat
 + Jobb
 + Annet
 //"validers med regex"
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>891</x><y>954</y><w>27</w><h>99</h></coordinates><panel_attributes>lt=-&gt;
-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>927</x><y>243</y><w>153</w><h>63</h></coordinates><panel_attributes>AdressebokId
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>814</x><y>902</y><w>33</w><h>77</h></coordinates><panel_attributes>lt=-&gt;
+</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>858</x><y>209</y><w>187</w><h>77</h></coordinates><panel_attributes>AdressebokId
 --
 - adressebokId: UUID
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>945</x><y>513</y><w>153</w><h>63</h></coordinates><panel_attributes>KontaktId
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>869</x><y>407</y><w>187</w><h>77</h></coordinates><panel_attributes>KontaktId
 --
 - kontaktId: Integer
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>711</y><w>153</w><h>63</h></coordinates><panel_attributes>Navn
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>869</x><y>528</y><w>187</w><h>77</h></coordinates><panel_attributes>Navn
 --
 - fornavn: String
 - etternavn: String
-bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>783</x><y>738</y><w>135</w><h>36</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>882</x><y>540</y><w>81</w><h>36</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>Relation</id><coordinates><x>864</x><y>252</y><w>81</w><h>45</h></coordinates><panel_attributes>lt=-&gt;
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>803</x><y>561</y><w>88</w><h>44</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>803</x><y>440</y><w>88</w><h>44</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>781</x><y>231</y><w>99</w><h>55</h></coordinates><panel_attributes>lt=-&gt;
 m2=1
-</panel_attributes><additional_attributes>10;20;70;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>459</x><y>396</y><w>432</w><h>207</h></coordinates><panel_attributes>&lt;&lt;Aggregate&gt;&gt;
+</panel_attributes><additional_attributes>10;20;70;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>286</x><y>396</y><w>528</w><h>286</h></coordinates><panel_attributes>&lt;&lt;Aggregate&gt;&gt;
 Kontakt
 --
 - id: KontaktId
-- data: KontaktData
+- navn: Navn
+- adresser: List&lt;Adresse&gt;
+- epost: List&lt;Epost&gt;
+- telefon: List&lt;Telefon&gt;
 
 --
 + opprettAdresse(adresseType: AdresseType, gatenavn: String, 
@@ -93,5 +83,6 @@ gatenummer: String, postnummer: String, by: String, land: String): Adresse
 + opprettTelefon(telefonType: TelefonType, telefonnummer: String): Telefon
 + slettTelefon(Telefon): Boolean
 bg=green
-//fornavn + etternavn må være unikt</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>675</x><y>594</y><w>36</w><h>81</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element></diagram>
+//fornavn + etternavn må være unikt</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>286</x><y>671</y><w>308</w><h>165</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..2</panel_attributes><additional_attributes>250;10;250;80;10;80;10;130</additional_attributes></element></diagram>

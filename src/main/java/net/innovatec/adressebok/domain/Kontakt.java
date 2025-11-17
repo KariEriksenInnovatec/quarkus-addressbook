@@ -1,21 +1,44 @@
 package net.innovatec.adressebok.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Kontakt {
 
     private KontaktId id = null;
-    private KontaktData data = null;
+    private Navn navn = null;
+    private List<Adresse> adresser = new ArrayList<>();
+    private List<Epost> epost = new ArrayList<>();
+    private List<Telefon> telefon = new ArrayList<>();
 
-    public Kontakt(KontaktId id, KontaktData data) {
+    public Kontakt(KontaktId id, Navn navn, List<Adresse> adresser, List<Epost> epost, List<Telefon> telefon) {
         this.id = id;
-        this.data = data;
+        this.navn = navn;
+        this.adresser = adresser;
+        this.epost = epost;
+        this.telefon = telefon;
+
     }
 
     public KontaktId hentId() {
         return id;
     }
 
-    public KontaktData hentKontaktData() {
-        return data;
+    public Navn hentNavn() {
+        return navn;
+    }
+
+    // Spørsmål til Erik, er det hensiktsmessig å ha getter metodet for lister av adresse, epost og telefon?
+    public List<Adresse> hentAdresser() {
+        return adresser;
+    }
+
+    public List<Epost> hentEpost() {
+        return epost;
+    }
+
+    public List<Telefon> hentTelefon() {
+        return telefon;
     }
 
     public Adresse opprettAdresse(AdresseType adresseType, String gatenavn, String gatenummer, String postnummer,
@@ -24,22 +47,22 @@ public class Kontakt {
 
         // Sjekker om det opprettes flere enn 2 adresser på en kontakt
         // Se domenemodellen
-        if (data.adresser().size() >= 2)
+        if (adresser.size() >= 2)
             throw new RuntimeException("Ikke lov å opprette mer enn 2 adresser.");
-        if (!data.adresser().isEmpty() && data.adresser().getFirst().adresseType() == adresseType)
+        if (!adresser.isEmpty() && adresser.getFirst().adresseType() == adresseType)
             throw new RuntimeException("Ikke lov med to adresser av samme type.");
 
-        Adresse nyAdresse = opprettAdresse(adresseType, gatenavn, gatenummer, postnummer, by, land);
-        data.adresser().add(nyAdresse);
+        Adresse nyAdresse = new Adresse(adresseType, gatenavn, gatenummer, postnummer, by, land);
+        adresser.add(nyAdresse);
 
         return nyAdresse;
     }
 
-    public void slettAdresse(Adresse adresse) {
+    public void slettAdresse(Adresse adresseSomSkalSlettes) {
 
         // Sjekker om adressen som skal slettes finnes på kontakten, og sletter dersom
         // den finnes
-        if (!data.adresser().remove(adresse))
+        if (!adresser.remove(adresseSomSkalSlettes))
             throw new RuntimeException("Kan ikke slette adressen, den finnes ikke i adresselisten.");
 
     }
@@ -47,34 +70,35 @@ public class Kontakt {
     public Epost opprettEpost(String epostAdresse) {
 
         // Sjekker om det finnes 3 eller flere e-post adresser allerede
-        if (data.epost().size() >= 3)
+        if (epost.size() >= 3)
             throw new RuntimeException("Ikke lov å opprette mer enn 3 e-post adresser.");
 
-        Epost nyEpost = opprettEpost(epostAdresse);
-        data.epost().add(nyEpost);
+        Epost nyEpost = new Epost(epostAdresse);
+        epost.add(nyEpost);
 
         return nyEpost;
     }
 
-    public void slettEpost(Epost epost) {
+    public void slettEpost(Epost epostSomSkalSlettes) {
 
-        if (!data.epost().remove(epost))
+        if (!epost.remove(epostSomSkalSlettes))
             throw new RuntimeException("Kan ikke slette e-post, den finnes ikke i listen.");
     }
 
     public Telefon opprettTelefon(TelefonType telefonType, String telefonnummer) {
 
-        if (data.telefon().size() >= 10)
+        if (telefon.size() >= 10)
             throw new RuntimeException("Ikke lov å opprette mer enn 10 telefonnummer.");
 
-        Telefon nyTelefon = opprettTelefon(telefonType, telefonnummer);
+        Telefon nyTelefon = new Telefon(telefonType, telefonnummer);
+        telefon.add(nyTelefon);
 
         return nyTelefon;
     }
 
-    public void slettTelefon(Telefon telefon) {
+    public void slettTelefon(Telefon telefonSomSkalSlettes) {
 
-        if (!data.telefon().remove(telefon))
+        if (!telefon.remove(telefonSomSkalSlettes))
             throw new RuntimeException("Kan ikke slette telefonnummer, den finnes ikke i listen.");
 
     }

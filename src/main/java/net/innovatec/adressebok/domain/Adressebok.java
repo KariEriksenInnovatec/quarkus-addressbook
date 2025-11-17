@@ -6,7 +6,7 @@ import java.util.List;
 public final class Adressebok {
 
     private AdressebokId id = null;
-    private List<Kontakt> kontakter = new ArrayList<Kontakt>();
+    private List<Kontakt> kontakter = new ArrayList<>();
 
     public Adressebok(AdressebokId id, List<Kontakt> kontakter) {
         this.id = id;
@@ -21,11 +21,19 @@ public final class Adressebok {
         return kontakter;
     }
 
-    public Kontakt opprettKontakt(KontaktId id, KontaktData data) {
+    public Kontakt opprettKontakt(KontaktId id, Navn navn) {
 
+        if (navn == null) {
+            throw new IllegalArgumentException("Navn er påkrevd for å opprette en kontatkt.");
+        }
         // Genererer id
 
-        Kontakt nyKontakt = opprettKontakt(id, data);
+        // Lager tomme lister for å sende inn
+        //List<Adresse> adresser = new ArrayList<>();
+        //List<Epost> epostListe = new ArrayList<>();
+        //List<Telefon> telefonListe = new ArrayList<>();
+
+        Kontakt nyKontakt = new Kontakt(id, navn, null, null, null);
         kontakter.add(nyKontakt);
 
         return nyKontakt;
