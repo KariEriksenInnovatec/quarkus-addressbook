@@ -23,15 +23,24 @@ public final class Adressebok {
 
     public Kontakt opprettKontakt(KontaktId id, Navn navn) {
 
+        // Genererer id
+
         if (navn == null) {
             throw new IllegalArgumentException("Navn er påkrevd for å opprette en kontatkt.");
         }
-        // Genererer id
+        // Sjekk om det allerede finnes en kontakt med samme navn
+        for (Kontakt eksisterendeKontakt : kontakter) {
+            Navn eksisterendeNavn = eksisterendeKontakt.hentNavn();
+            if (eksisterendeNavn.equals(navn)) {
+                throw new IllegalArgumentException(
+                        "En kontakt med navnet " + navn.fornavn() + " " + navn.etternavn() + " finnes allerede.");
+            }
+        }
 
         // Lager tomme lister for å sende inn
-        //List<Adresse> adresser = new ArrayList<>();
-        //List<Epost> epostListe = new ArrayList<>();
-        //List<Telefon> telefonListe = new ArrayList<>();
+        // List<Adresse> adresser = new ArrayList<>();
+        // List<Epost> epostListe = new ArrayList<>();
+        // List<Telefon> telefonListe = new ArrayList<>();
 
         Kontakt nyKontakt = new Kontakt(id, navn, null, null, null);
         kontakter.add(nyKontakt);
