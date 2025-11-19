@@ -13,6 +13,8 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.24.5</quarkus.platform.version>
+        <open-api-generator.version>2.13.0-lts</open-api-generator.version>
+        <mapstruct.version>1.6.3</mapstruct.version>        
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
     </properties>
@@ -40,12 +42,30 @@
         </dependency>
 		<dependency>
 		  <groupId>io.quarkus</groupId>
-		  <artifactId>quarkus-resteasy-jackson</artifactId>
-		</dependency>    
+		  <artifactId>quarkus-rest-jackson</artifactId>
+		</dependency>
+        <!-- <dependency>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-rest-client-jackson</artifactId>
+        </dependency> -->
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+    		<artifactId>quarkus-hibernate-validator</artifactId>
+		</dependency>
 	    <dependency>
 		  <groupId>io.quarkus</groupId>
 		  <artifactId>quarkus-smallrye-openapi</artifactId>
 		</dependency>
+    <dependency>
+        <groupId>io.quarkiverse.openapi.generator</groupId>
+        <artifactId>quarkus-openapi-generator-server</artifactId>
+        <version>${open-api-generator.version}</version>
+    </dependency>		
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${mapstruct.version}</version>
+    </dependency>
 		<dependency>
 		  <groupId>io.quarkus</groupId>
 		  <artifactId>quarkus-swagger-ui</artifactId>
@@ -84,7 +104,18 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
                 <configuration>
+                    <source>21</source> <!-- or your Java version -->
+                    <target>21</target> <!-- or your Java version -->                
                     <parameters>true</parameters>
+                    <annotationProcessorPaths>
+                        <!-- MapStruct annotation processor -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- Add other processors like Lombok if needed -->
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -116,6 +147,28 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.coderplus.maven.plugins</groupId>
+                <artifactId>copy-rename-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-file</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <sourceFile>src/main/openapi/adressebok.yaml</sourceFile>
+                                    <destinationFile>src/main/resources/META-INF/openapi.yaml</destinationFile>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>   
         </plugins>
     </build>
 

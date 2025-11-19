@@ -4,4 +4,4 @@
  * som eksponerer funksjonalitet til eksterne klienter.
  * Den adskiller presentasjonslaget fra applikasjons- og domenelaget.
  */
-package net.innovatec.adressebok.api;
+package net.innovatec.adressebok.infrastructure.api;

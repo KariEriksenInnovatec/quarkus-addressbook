@@ -1,0 +1,427 @@
+openapi: 3.0.3
+info:
+  title: Adressebok
+  contact:
+    email: kontakt@innovatec.net
+    name: Innovatec - Innovative Techologies AS
+    url: https://www.innovatec.net
+  version: 0.9.0
+  description: |
+    Dette er et API for en enkel adressebok.
+servers:
+  - url: http://localhost:8080
+    description: localhost.
+paths:
+  /adressebok:
+    post:
+      operationId: opprettAdressebok
+      tags:
+        - adressebok
+      summary: Opprett en adressebok.
+      description: |
+        Oppretter en adressebok og returnerer en unik id.
+      security: []
+      responses:
+        "200":
+          description: adressebok ble opprettet.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdressebokId"
+        "406":
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
+    get:
+      operationId: hentAdressebok
+      tags:
+        - adressebok
+      summary: Hente en adressebok.
+      description: |
+        Henter ut innehold på en adressebok med angitt id.
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/AdressebokIdParam"
+      responses:
+        "200":
+          description: adressebok ble hentet ut.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Adressebok"
+        "400":
+          $ref: "#/components/responses/400_application_error_response"
+        "404":
+          $ref: "#/components/responses/404_response" 
+        "406":
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
+    delete:
+        operationId: slettAdressebok
+        tags:
+          - adressebok
+        summary: Slett en adressebok.
+        description: |
+          Slett en adressebok med angitt id.
+        security: []
+        parameters:
+          - $ref: "#/components/parameters/AdressebokIdParam"
+        responses:
+         "204":
+            description: Adressebok ble slettet.
+         "400":
+            $ref: "#/components/responses/400_application_error_response"
+         "404":
+            $ref: "#/components/responses/404_response" 
+         "429":
+            $ref: "#/components/responses/429_response"
+  /adressebok/{AdressebokId}/kontakt:
+    post:
+      operationId: opprettKontakt
+      tags:
+        - kontakt
+      summary: Opprett en kontakt i adressebok.
+      description: |
+        Oppretter en kontakt og returnerer en unik id.
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/AdressebokIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KontaktData" 
+      responses:
+        "200":
+          description: kontakt ble opprettet.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KontaktId"
+        "404":
+          $ref: "#/components/responses/404_response" 
+        "406": 
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
+    get:
+      operationId: hentKontakt
+      tags:
+        - kontakt
+      summary: Hente en kontakt.
+      description: |
+        Henter ut innehold på en kontakt med angitt id.
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/AdressebokIdParam"
+        - $ref: "#/components/parameters/KontaktIdParam"
+      responses:
+        "200":
+          description: kontakt ble hentet ut.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Kontakt"
+        "400":
+          $ref: "#/components/responses/400_response"
+        "404":
+          $ref: "#/components/responses/404_response" 
+        "406":
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
+    put:
+      operationId: oppdaterKontakt
+      tags:
+        - kontakt
+      summary: Oppdaterer en kontakt.
+      description: |
+        Oppdaterer angitt kontakt med ny innehold.
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/AdressebokIdParam"
+        - $ref: "#/components/parameters/KontaktIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KontaktData" 
+      responses:
+         "204":
+            description: Kontakt ble slettet.
+         "400":
+            $ref: "#/components/responses/400_response"
+         "404":
+            $ref: "#/components/responses/404_response" 
+         "429":
+            $ref: "#/components/responses/429_response"
+    delete:
+        operationId: slettKontakt
+        tags:
+          - kontakt
+        summary: Slett en kontakt.
+        description: |
+          Slett en kontakt med angitt id.
+        security: []
+        parameters:
+          - $ref: "#/components/parameters/AdressebokIdParam"
+          - $ref: "#/components/parameters/KontaktIdParam"
+        responses:
+         "204":
+            description: Kontakt ble slettet.
+         "400":
+            $ref: "#/components/responses/400_response"
+         "404":
+            $ref: "#/components/responses/404_response" 
+         "429":
+            $ref: "#/components/responses/429_response"
+components:
+  parameters:
+    AdressebokIdParam:
+      name: AdressebokId
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+    KontaktIdParam:
+      name: KontaktId
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    200_response:
+      description: |
+         Accepted 
+         
+         Brukes med opprettelse og henting av adressebøker og kontakter.
+    204_response:
+      description: |
+         Accepted 
+
+         Brukes med sletting og oppdateringer av adressebøker og kontakter.
+    400_response:
+      description: |
+         Bad Request 
+
+         Feil der vi ikke kan angi noen mer spesifikk informasjon.
+    400_application_error_response:
+      description: |
+        Bad Request 
+
+         Feil der vi kan angi noen mer spesifikk informasjon om hva som feiler.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RFC7807_FORMAT"
+          example:
+            type: https://www.innovatec.net/adressebok/ugyldig-request
+            title: "Ugyldig request"
+            status: 400
+            details: "Fornavn kan ikke være mer enn 100 tegn lang."
+            instance: "/Adressebokid/feeea3f7-155b-4123-a49e-38840e80989c/Kontakt"
+    401_response:
+      description: |
+        Unauthorized
+
+        Sjekke at JWT ble sendt med requesten, er gyldig og har ikke gått ut på tid.
+    403_response:
+      description: |
+        Forbidden
+
+        Mangler rettigheter til å utføre handlingen.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RFC7807_FORMAT"
+          example:
+            type: https://www.innovatec.net/adressebok/mangler-rettigheter
+            title: "Mangler rettigheter"
+            status: 403
+            details: "Bruker mangler rettigheter for å utføre handling."
+            instance: "/Adressebokid/feeea3f7-155b-4123-a49e-38840e80989c/Kontakt"
+    404_response:
+      description: |
+        Not Found
+
+        Adressebok eller kontakt ikke funnet.
+    406_response:
+      description: |
+        Not Acceptable
+
+        Endest application/json som blir returnert.
+    415_response:
+      description: |
+        Unsupported Media Type
+
+        Det er kun *application/json* som kan sendes inn.
+    429_response:
+      description: |
+        Too Many Requests
+
+        I det tilfeller der rate limiting er implementert så vil man få tilbake informasjon i header response om når man kan teste på nytt.
+  schemas:
+    AdressebokId:
+        type: object
+        required:
+           - id
+        additionalProperties: false
+        properties:
+           value:
+              type: string 
+              format: uuid
+    Adressebok:
+        type: object
+        required:
+            - id
+        additionalProperties: false
+        properties:
+            id:
+                $ref: "#/components/schemas/AdressebokId"
+            kontakter:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Kontakt"
+    KontaktId:
+        type: object
+        required:
+           - id
+        additionalProperties: false
+        properties:
+           value:
+              type: string 
+              format: uuid
+    Kontakt:
+        description: En kontakt som inneholder id, navn, adresser, epostadresser og telefonnummre.
+        type: object
+        additionalProperties: false
+        required:
+            - navn
+        properties:
+            id:
+                $ref: "#/components/schemas/KontaktId"
+            navn:
+                $ref: "#/components/schemas/Navn"
+            adresser:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Adresse"
+            epostadresser:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Epost"
+            telefonnumre:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Telefon"
+    KontaktData:
+        description: Inneholder navn, adresser, epostadresser og telefonnummre som skal brukes i opprettelse eller oppdatering av Kontakt.
+        type: object
+        additionalProperties: false
+        required:
+            - navn
+        properties:
+            navn:
+                $ref: "#/components/schemas/Navn"
+            adresser:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Adresse"
+            epostadresser:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Epost"
+            telefonnumre:
+                type: array
+                items:
+                    $ref: "#/components/schemas/Telefon"
+    Navn:
+        description: Fornavn og etternavn på en kontakt.
+        type: object
+        required:
+            - fornavn
+            - etternavn
+        additionalProperties: false
+        properties:
+            fornavn:
+                type: string
+                maxLength: 100
+            etternavn:
+                type: string
+                maxLength: 50
+    Adresse:
+        description: En adresse der kontakt jobber eller bor.
+        type: object
+        additionalProperties: false
+        required:
+            - adressetype
+            - gatenavn
+            - gatenummer
+            - postnummer
+            - by
+            - landkode
+        properties:
+            adressetype:
+                type: string
+                enum: [JOBB,PRIVAT]
+            gatenavn:
+                type: string
+            gatenummer:
+                type: string
+            postnummer:
+                type: string
+            by:
+                type: string
+            landkode:
+                type: string
+    Epost:
+        description: En epostadresse til kontakt.
+        type: object
+        additionalProperties: false
+        properties:
+            epostadresse:
+                type: string
+    Telefon:
+        description: En telefonnummer til kontakt.
+        type: object
+        additionalProperties: false
+        properties:
+            telefontype:
+                type: string
+                enum: [JOBB,PRIVAT,ANNET]
+            landskode:
+                type: string
+            telefonnummer:
+                type: string
+    UUID:
+      description: En UUID
+      type: string
+      pattern: "[0-0a-f]{8}-[0-0a-f]{4}-[0-0a-f]{4}-[0-0a-f]{12}"
+      example: faf19c22-0251-464c-8c7c-9a8891a464e6
+    RFC7807_FORMAT:
+       description: RFC7808 format structure for problem details.
+       type: object
+       additionalProperties: false
+       properties:
+          type:
+             type: string
+          title:
+             type: string
+          status:
+             type: integer
+          detail:
+             type: string
+          insatnce:
+             type: string   
+    
+                
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
