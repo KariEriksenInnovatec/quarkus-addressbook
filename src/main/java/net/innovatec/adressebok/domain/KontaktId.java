@@ -1,4 +1,6 @@
 package net.innovatec.adressebok.domain;
 
-public record KontaktId(Integer kontaktId) {
+import java.util.UUID;
+
+public record KontaktId(UUID kontaktId) {
 }

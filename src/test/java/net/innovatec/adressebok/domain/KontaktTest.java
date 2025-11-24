@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -30,11 +29,8 @@ public class KontaktTest {
          */
 
         Navn navn = new Navn("Ali", "Smith");
-        List<Adresse> adresser = new ArrayList<>();
-        List<Epost> epostListe = new ArrayList<>();
-        List<Telefon> telefonListe = new ArrayList<>();
 
-        kontakt = new Kontakt(new KontaktId(1), navn, adresser, epostListe, telefonListe);
+        kontakt = new Kontakt(new KontaktId(UUID.randomUUID()), navn);
     }
 
     @Test
@@ -84,7 +80,9 @@ public class KontaktTest {
         assertEquals("First Street", adresse.gatenavn());
     }
 
-    // Teste sletting av adresse?
+    // Legg til negativ sletting av adresse
+
+    // Legg til postitiv sletting av adresse
 
     @Test
     void testOpprettEpost_IkkeLovMedMerEnn3Epostadresser() {
@@ -108,7 +106,9 @@ public class KontaktTest {
         assertEquals("test@testing.com", epost.epostAdresse());
     }
 
-    // Teste sletting av epost?
+    // Legg til negativ sletting av epost
+
+    // Legg til postitiv sletting av epost
 
     @Test
     void testOpprettTelefon_IkkeLovMedMerEnn10Telefonnummer() {
@@ -139,8 +139,9 @@ public class KontaktTest {
         assertNotNull(telefon);
         assertEquals(TelefonType.PRIVAT, telefon.telefonType());
         assertEquals("+442071234561", telefon.telefonnummer());
-
     }
 
-    // Teste sletting av telefon?
+    // Legg til negativ sletting av telefon
+
+    // Legg til postitiv sletting av telefin
 }

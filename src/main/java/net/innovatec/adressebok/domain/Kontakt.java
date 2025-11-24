@@ -11,13 +11,9 @@ public class Kontakt {
     private List<Epost> epost = new ArrayList<>();
     private List<Telefon> telefon = new ArrayList<>();
 
-    public Kontakt(KontaktId id, Navn navn, List<Adresse> adresser, List<Epost> epost, List<Telefon> telefon) {
+    public Kontakt(KontaktId id, Navn navn) {
         this.id = id;
         this.navn = navn;
-        this.adresser = adresser;
-        this.epost = epost;
-        this.telefon = telefon;
-
     }
 
     public KontaktId hentId() {
@@ -28,17 +24,12 @@ public class Kontakt {
         return navn;
     }
 
-    // Spørsmål til Erik, er det hensiktsmessig å ha getter metodet for lister av adresse, epost og telefon?
-    public List<Adresse> hentAdresser() {
-        return adresser;
-    }
-
-    public List<Epost> hentEpost() {
-        return epost;
-    }
-
-    public List<Telefon> hentTelefon() {
-        return telefon;
+    public void settNavn(Navn nyttNavn) {
+        
+        if (nyttNavn == null) {
+            throw new IllegalArgumentException("Navn kan ikke være null.");
+        }
+        this.navn = nyttNavn;
     }
 
     public Adresse opprettAdresse(AdresseType adresseType, String gatenavn, String gatenummer, String postnummer,
@@ -64,7 +55,6 @@ public class Kontakt {
         // den finnes
         if (!adresser.remove(adresseSomSkalSlettes))
             throw new RuntimeException("Kan ikke slette adressen, den finnes ikke i adresselisten.");
-
     }
 
     public Epost opprettEpost(String epostAdresse) {
