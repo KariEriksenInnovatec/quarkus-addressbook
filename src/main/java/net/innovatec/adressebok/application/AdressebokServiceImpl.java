@@ -1,14 +1,18 @@
 package net.innovatec.adressebok.application;
 
+import java.util.List;
+
+import io.quarkus.arc.profile.IfBuildProfile;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import net.innovatec.adressebok.domain.AdressebokRepository;
+import net.innovatec.adressebok.domain.AdressebokService;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
 import net.innovatec.adressebok.domain.model.Kontakt;
 import net.innovatec.adressebok.domain.model.KontaktData;
 import net.innovatec.adressebok.domain.model.KontaktId;
 import net.innovatec.adressebok.domain.model.Navn;
-import net.innovatec.adressebok.infrastructure.persistence.AdressebokRepository;
 
 /**
  * Tjeneste som ekspoenerer metoder for å oppdatere og hente ut objekt fra
@@ -16,18 +20,23 @@ import net.innovatec.adressebok.infrastructure.persistence.AdressebokRepository;
  */
 
 @ApplicationScoped
-public class AdressebokService {
+public class AdressebokServiceImpl implements AdressebokService {
     @Inject
     AdressebokRepository adressebokRepo;
 
-    public AdressebokId opprettAdressbok() {
+    public AdressebokId opprettAdressebok() {
         Adressebok bok = adressebokRepo.opprettAdressBok();
-        return bok.getId();
+        return bok.hentId();
     }
-
+    
+    public AdressebokId importerAdressebok(Adressebok bok) {
+        return adressebokRepo.leggTilAdressebok(bok);
+    }
+    
     public Adressebok hentAdressebok(AdressebokId id) {
         Adressebok bok = adressebokRepo.hentAdressebok(id);
         return bok;
+
     }
 
     public void slettAdressebok(AdressebokId id) {
@@ -58,5 +67,13 @@ public class AdressebokService {
     public void slettKontakt(AdressebokId bokId, KontaktId kontaktId) {
         Adressebok bok = hentAdressebok(bokId);
         bok.slettKontakt(kontaktId);
+
+    }
+
+    public List<Kontakt> søkKontakt(AdressebokId bokId, String kriterie) {
+        Adressebok bok = hentAdressebok(bokId);
+        List<Kontakt> resultat = bok.søkKontakt(kriterie);
+        return resultat;
+
     }
 }

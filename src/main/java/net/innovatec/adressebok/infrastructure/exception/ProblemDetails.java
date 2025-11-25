@@ -1,0 +1,69 @@
+package net.innovatec.adressebok.infrastructure.exception;
+
+import javax.json.bind.annotation.JsonbProperty;
+
+public class ProblemDetails {
+    @JsonbProperty("type")
+    private String type;
+    
+    @JsonbProperty("title")
+    private String title;
+    
+    @JsonbProperty("status")
+    private int status;
+    
+    @JsonbProperty("detail")
+    private String detail;
+    
+    @JsonbProperty("instance")
+    private String instance;
+
+    // Constructors, getters, and setters
+    public ProblemDetails(String type, String title, int status, String detail, String instance) {
+        this.type = type;
+        this.title = title;
+        this.status = status;
+        this.detail = detail;
+        this.instance = instance;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getInstance() {
+        return instance;
+    }
+
+    public void setInstance(String instance) {
+        this.instance = instance;
+    }    
+}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Adressebok {
 	private AdressebokId id = null;
@@ -17,7 +18,7 @@ public class Adressebok {
         this.id = id;
     }
 
-    public AdressebokId getId() {
+    public AdressebokId hentId() {
 		return id;
 	}
         
@@ -40,12 +41,12 @@ public class Adressebok {
 	}
 			
 	public Kontakt henteKontakt(KontaktId id) {
-        if( !kontakter.keySet().contains(id)) throw new DomeneException("Angitt KontaktId ikke funnet!");
+        if( !kontakter.keySet().contains(id)) throw new IkkeFunnetDomeneException("Angitt KontaktId ikke funnet!", Optional.of(this.id), Optional.of(id));
 		return new Kontakt(id, kontakter.get(id));
 	}
 
 	public void oppdatereKontakt(KontaktId id, KontaktData data) {
-	    if( !kontakter.keySet().contains(id)) throw new DomeneException("Angitt KontaktId ikke funet! Oppdatering feilet!");
+        if( !kontakter.keySet().contains(id)) throw new IkkeFunnetDomeneException("Angitt KontaktId ikke funnet!", Optional.of(this.id), Optional.of(id));
 	    kontakter.put(id, data);
 	}
 
@@ -56,7 +57,7 @@ public class Adressebok {
 	public List<Kontakt> søkKontakt(String kriterie) {
 		List<Kontakt> result = new ArrayList<Kontakt>();
 		for (Kontakt kontakt: hentKontakter()) {
-			if(kontakt.hentNavn().fullnavn().matches(kriterie)) {
+			if(kontakt.hentNavn().fullnavn().matches(".*" + kriterie + ".*")) {
 				result.add(kontakt);
 			}
 		}

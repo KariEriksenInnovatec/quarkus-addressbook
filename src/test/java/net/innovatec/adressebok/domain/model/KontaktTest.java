@@ -1,6 +1,7 @@
 package net.innovatec.adressebok.domain.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -106,7 +107,7 @@ class KontaktTest {
 
     @Test
     void testOpprettOgLeggTilTelefon() {
-        Telefon telefon = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.PRIVAT, "1", "(203) 555-98765");
+        Telefon telefon = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.PRIVAT, "1", "(203) 555-9876");
         assertEquals(TelefonType.PRIVAT, telefon.type());
         assertEquals("1", telefon.landskode());
         assertEquals("(203) 555-98765", telefon.nummer());
@@ -115,7 +116,7 @@ class KontaktTest {
 
     @Test
     void testSlettTelefon() {
-        Telefon telefon1 = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.PRIVAT, "1", "(203) 555-98765");
+        Telefon telefon1 = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.PRIVAT, "1", "(203) 555-9876");
         Telefon telefon2 = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.JOBB, "1", "(307) 555-1234");
         Telefon telefon3 = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.ANNET, "47", "940 54 123");
         assertEquals(3, minnieMouse.hentTelefonnummerer().size());

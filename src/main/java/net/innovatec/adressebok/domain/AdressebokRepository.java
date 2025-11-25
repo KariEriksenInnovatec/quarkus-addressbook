@@ -1,10 +1,12 @@
-package net.innovatec.adressebok.infrastructure.persistence;
+package net.innovatec.adressebok.domain;
 
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
 
 public interface AdressebokRepository {
 	public Adressebok opprettAdressBok();
+
+	public AdressebokId leggTilAdressebok(Adressebok bok);
 	
 	public Adressebok hentAdressebok(String uuid);
 

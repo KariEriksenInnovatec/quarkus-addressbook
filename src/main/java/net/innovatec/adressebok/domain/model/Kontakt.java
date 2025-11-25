@@ -15,7 +15,7 @@ public final class Kontakt {
     }
 
     public Kontakt(Navn navn) {
-        this.id = new KontaktId(); // or use KontaktId.newId() if you prefer
+        this.id = new KontaktId(); 
         this.data = new KontaktData(navn, Set.of(), Set.of(), Set.of());
     }
     
@@ -25,7 +25,7 @@ public final class Kontakt {
     }
 
     public Kontakt(KontaktData data) {
-        this.id = new KontaktId(); // or use KontaktId.newId() if you prefer
+        this.id = new KontaktId(); 
         this.data = data;
     }
 

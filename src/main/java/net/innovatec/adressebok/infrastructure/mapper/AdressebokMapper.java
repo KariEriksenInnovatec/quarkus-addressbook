@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -40,7 +41,7 @@ public interface AdressebokMapper {
         
     default net.innovatec.adressebok.infrastructure.api.beans.Adressebok toDto(Adressebok adressebok) {
         net.innovatec.adressebok.infrastructure.api.beans.Adressebok dto = new net.innovatec.adressebok.infrastructure.api.beans.Adressebok();
-        dto.setId(toDto(adressebok.getId())); 
+        dto.setId(toDto(adressebok.hentId())); 
         dto.setKontakter(mapKontakterToList(adressebok.hentKontakter()));
         return dto;        
     }
@@ -116,10 +117,19 @@ public interface AdressebokMapper {
     }
 
     // Mapping for KontaktData
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "navn", source = "dto.navn")
+    @Mapping(target = "adresser", source = "dto.adresser")
+    @Mapping(target = "epostadresser", source = "dto.epostadresser")
+    @Mapping(target = "telefonnumre", source = "dto.telefonnumre")
     KontaktData toDomain(net.innovatec.adressebok.infrastructure.api.beans.KontaktData dto);
-    
-    net.innovatec.adressebok.infrastructure.api.beans.KontaktData toDto(KontaktData data);
-    
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "navn", source = "data.navn")
+    @Mapping(target = "adresser", source = "data.adresser")
+    @Mapping(target = "epostadresser", source = "data.epostadresser")
+    @Mapping(target = "telefonnumre", source = "data.telefonnumre")
+    net.innovatec.adressebok.infrastructure.api.beans.KontaktData toDto(KontaktData data);    
     // Mapping for Navn
     Navn toDomain(net.innovatec.adressebok.infrastructure.api.beans.Navn dto);
 

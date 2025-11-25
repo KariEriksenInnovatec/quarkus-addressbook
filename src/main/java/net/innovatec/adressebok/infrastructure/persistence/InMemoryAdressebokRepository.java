@@ -6,8 +6,10 @@ import java.util.Map;
 
 import io.quarkus.arc.profile.IfBuildProfile;
 import jakarta.enterprise.context.ApplicationScoped;
+import net.innovatec.adressebok.domain.AdressebokRepository;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
+import net.innovatec.adressebok.domain.model.IkkeFunnetDomeneException;
 
 @IfBuildProfile("dev")
 @ApplicationScoped
@@ -16,8 +18,13 @@ public final class InMemoryAdressebokRepository implements AdressebokRepository 
 
 	public Adressebok opprettAdressBok() {
 		Adressebok adressebok = new Adressebok();
-		adressebøker.put(adressebok.getId(), adressebok);
+		adressebøker.put(adressebok.hentId(), adressebok);
 		return adressebok;
+	}
+	
+	public AdressebokId leggTilAdressebok(Adressebok bok) {
+	    adressebøker.put(bok.hentId(), bok);
+	    return bok.hentId();
 	}
 	
 	public Adressebok hentAdressebok(String uuid) {
@@ -26,7 +33,7 @@ public final class InMemoryAdressebokRepository implements AdressebokRepository 
 	}
 
 	public Adressebok hentAdressebok(AdressebokId adressebokId) {
-		if(!adressebøker.containsKey(adressebokId)) throw new RuntimeException("Adressebok eksisterer ikke!");
+        if(!adressebøker.containsKey(adressebokId)) throw new IkkeFunnetDomeneException("Adressebok eksisterer ikke!");
 		return adressebøker.get(adressebokId);
 	}
 

@@ -76,6 +76,60 @@ paths:
             $ref: "#/components/responses/404_response" 
          "429":
             $ref: "#/components/responses/429_response"
+  /adressebok/importer:
+    post:
+      operationId: importerAdressebok
+      tags:
+        - adressebok
+      summary: Importere en adressebok.
+      description: |
+        Importere en adressebok.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Adressebok" 
+      responses:
+        "200":
+          description: adressebok ble importert.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdressebokId"
+        "406":
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
+  /adressebok/eksporter:
+    get:
+      operationId: eksporterAdressebok
+      tags:
+        - adressebok
+      summary: Eksportere en adressebok.
+      description: |
+        Eksportere en adressebok med angitt id.
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/AdressebokIdParam"
+      responses:
+        "200":
+          description: adressebok ble eksportert.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        "400":
+          $ref: "#/components/responses/400_application_error_response"
+        "404":
+          $ref: "#/components/responses/404_response" 
+        "406":
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
+
   /adressebok/{AdressebokId}/kontakt:
     post:
       operationId: opprettKontakt
@@ -178,6 +232,39 @@ paths:
             $ref: "#/components/responses/404_response" 
          "429":
             $ref: "#/components/responses/429_response"
+  /adressebok/{AdressebokId}/kontakt/search:
+    get:
+      operationId: sokKontakt
+      tags:
+        - kontakt
+      summary: Søk etter kontakter i en adressebok.
+      description: |
+        Søk etter kontakter i den angitte adresseboken ved hjelp av spørringsparametere.
+      parameters:
+        - $ref: "#/components/parameters/AdressebokIdParam"
+        - name: navn
+          in: query
+          description: Navnet på kontakten du vil søke etter.
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: En liste over kontakter som samsvarer med søkekriteriene.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Kontakt"
+        "400":
+          $ref: "#/components/responses/400_response"
+        "404":
+          $ref: "#/components/responses/404_response"
+        "406":
+          $ref: "#/components/responses/406_response"
+        "429":
+          $ref: "#/components/responses/429_response"
 components:
   parameters:
     AdressebokIdParam:
@@ -269,7 +356,7 @@ components:
     AdressebokId:
         type: object
         required:
-           - id
+           - value
         additionalProperties: false
         properties:
            value:
@@ -290,56 +377,49 @@ components:
     KontaktId:
         type: object
         required:
-           - id
+           - value
         additionalProperties: false
         properties:
            value:
               type: string 
               format: uuid
+    KontaktBase:
+      type: object
+      required:
+        - navn
+      properties:
+        navn:
+          $ref: "#/components/schemas/Navn"
+        adresser:
+          type: array
+          items:
+            $ref: "#/components/schemas/Adresse"
+        epostadresser:
+          type: array
+          items:
+            $ref: "#/components/schemas/Epost"
+        telefonnumre:
+          type: array
+          items:
+            $ref: "#/components/schemas/Telefon"
+
     Kontakt:
-        description: En kontakt som inneholder id, navn, adresser, epostadresser og telefonnummre.
-        type: object
-        additionalProperties: false
-        required:
-            - navn
-        properties:
+      description: En kontakt som inneholder id, navn, adresser, epostadresser og telefonnummre.
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: "#/components/schemas/KontaktBase"
+        - type: object
+          properties:
             id:
-                $ref: "#/components/schemas/KontaktId"
-            navn:
-                $ref: "#/components/schemas/Navn"
-            adresser:
-                type: array
-                items:
-                    $ref: "#/components/schemas/Adresse"
-            epostadresser:
-                type: array
-                items:
-                    $ref: "#/components/schemas/Epost"
-            telefonnumre:
-                type: array
-                items:
-                    $ref: "#/components/schemas/Telefon"
+              $ref: "#/components/schemas/KontaktId"
+
     KontaktData:
-        description: Inneholder navn, adresser, epostadresser og telefonnummre som skal brukes i opprettelse eller oppdatering av Kontakt.
-        type: object
-        additionalProperties: false
-        required:
-            - navn
-        properties:
-            navn:
-                $ref: "#/components/schemas/Navn"
-            adresser:
-                type: array
-                items:
-                    $ref: "#/components/schemas/Adresse"
-            epostadresser:
-                type: array
-                items:
-                    $ref: "#/components/schemas/Epost"
-            telefonnumre:
-                type: array
-                items:
-                    $ref: "#/components/schemas/Telefon"
+      description: Inneholder navn, adresser, epostadresser og telefonnummre som skal brukes i opprettelse eller oppdatering av Kontakt.
+      type: object
+      additionalProperties: false
+      allOf:
+        - $ref: "#/components/schemas/KontaktBase"
     Navn:
         description: Fornavn og etternavn på en kontakt.
         type: object
