@@ -1,0 +1,589 @@
+openapi: 3.0.3
+
+# ============================================================================
+# INFO-SEKSJONEN
+# Metadata om API-et ditt. Vises i dokumentasjonsverktøy som Swagger UI.
+# ============================================================================
+info:
+  title: Adressebok API
+  description: |
+    API for administrasjon av adressebøker og kontakter.
+
+    ## Funksjonalitet
+    - Opprette og administrere adressebøker
+    - Legge til, oppdatere og slette kontakter
+    - Søke etter kontakter på navn
+
+    ## Begrensninger per kontakt
+    - Maks 2 adresser (én PRIVAT, én JOBB)
+    - Maks 3 e-postadresser
+    - Maks 10 telefonnumre
+  version: 1.0.0
+  contact:
+    name: Innovatec
+
+# ============================================================================
+# SERVERS
+# Base-URL-er for API-et. Kan ha flere (dev, staging, prod).
+# ============================================================================
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Lokal utviklingsserver
+
+# ============================================================================
+# TAGS
+# Grupperer endepunktene i dokumentasjonen. Gjør det lettere å navigere.
+# ============================================================================
+tags:
+  - name: Adressebok
+    description: Operasjoner for adressebøker
+  - name: Kontakt
+    description: Operasjoner for kontakter
+
+# ============================================================================
+# PATHS (ENDEPUNKTER)
+# Her definerer du alle URL-ene API-et ditt eksponerer.
+# Hver path kan ha flere HTTP-metoder (get, post, put, delete, etc.)
+# ============================================================================
+paths:
+
+  # --------------------------------------------------------------------------
+  # /adresseboker - Samling av adressebøker
+  # --------------------------------------------------------------------------
+  /adresseboker:
+    get:
+      summary: Hent alle adressebøker
+      description: Returnerer en liste over alle adressebøker i systemet.
+      operationId: hentAlleAdresseboker
+      tags:
+        - Adressebok
+      responses:
+        '200':
+          description: Vellykket - returnerer liste over adressebøker
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdressebokResponse'
+              # Eksempel på hva som returneres - nyttig for dokumentasjon
+              example:
+                - id: "550e8400-e29b-41d4-a716-446655440000"
+                  antallKontakter: 5
+                - id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+                  antallKontakter: 12
+
+    post:
+      summary: Opprett ny adressebok
+      description: Oppretter en ny, tom adressebok. ID genereres av serveren.
+      operationId: opprettAdressebok
+      tags:
+        - Adressebok
+      # POST uten requestBody - serveren genererer alt
+      responses:
+        '201':
+          description: Adressebok opprettet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdressebokResponse'
+          # Headers kan brukes til å returnere URL til ny ressurs
+          headers:
+            Location:
+              description: URL til den nye adresseboken
+              schema:
+                type: string
+                example: /api/v1/adresseboker/550e8400-e29b-41d4-a716-446655440000
+
+  # --------------------------------------------------------------------------
+  # /adresseboker/{adressebokId} - Enkelt adressebok
+  # --------------------------------------------------------------------------
+  /adresseboker/{adressebokId}:
+    # Parametere definert her gjelder for ALLE metoder under denne pathen
+    parameters:
+      - $ref: '#/components/parameters/AdressebokIdPath'
+
+    get:
+      summary: Hent en adressebok med alle kontakter
+      description: Returnerer adresseboken med full liste over kontakter.
+      operationId: hentAdressebok
+      tags:
+        - Adressebok
+      responses:
+        '200':
+          description: Adressebok funnet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdressebokMedKontakterResponse'
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+
+    delete:
+      summary: Slett en adressebok
+      description: Sletter adresseboken og alle kontakter i den.
+      operationId: slettAdressebok
+      tags:
+        - Adressebok
+      responses:
+        '204':
+          description: Adressebok slettet (ingen innhold returneres)
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+
+  # --------------------------------------------------------------------------
+  # /adresseboker/{adressebokId}/kontakter - Kontakter i en adressebok
+  # --------------------------------------------------------------------------
+  /adresseboker/{adressebokId}/kontakter:
+    parameters:
+      - $ref: '#/components/parameters/AdressebokIdPath'
+
+    get:
+      summary: Hent alle kontakter
+      description: |
+        Returnerer alle kontakter i adresseboken.
+        Bruk `sok`-parameteren for å filtrere på navn.
+      operationId: hentKontakter
+      tags:
+        - Kontakt
+      parameters:
+        # Query-parameter for søk
+        - name: sok
+          in: query
+          required: false
+          description: |
+            Søkestreng for å filtrere kontakter.
+            Søker i fornavn og etternavn (case-insensitive, starter-med).
+          schema:
+            type: string
+            minLength: 1
+          example: "Ola"
+      responses:
+        '200':
+          description: Liste over kontakter
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KontaktResponse'
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+
+    post:
+      summary: Opprett ny kontakt
+      description: |
+        Oppretter en ny kontakt i adresseboken.
+        Kun navn er påkrevd - ID genereres av serveren.
+      operationId: opprettKontakt
+      tags:
+        - Kontakt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpprettKontaktRequest'
+            example:
+              navn:
+                fornavn: "Ola"
+                etternavn: "Nordmann"
+      responses:
+        '201':
+          description: Kontakt opprettet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktResponse'
+          headers:
+            Location:
+              description: URL til den nye kontakten
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/UgyldigForesporsel'
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+        '409':
+          $ref: '#/components/responses/Konflikt'
+
+  # --------------------------------------------------------------------------
+  # /adresseboker/{adressebokId}/kontakter/{kontaktId} - Enkelt kontakt
+  # --------------------------------------------------------------------------
+  /adresseboker/{adressebokId}/kontakter/{kontaktId}:
+    parameters:
+      - $ref: '#/components/parameters/AdressebokIdPath'
+      - $ref: '#/components/parameters/KontaktIdPath'
+
+    get:
+      summary: Hent en kontakt
+      description: Returnerer en enkelt kontakt med alle detaljer.
+      operationId: hentKontakt
+      tags:
+        - Kontakt
+      responses:
+        '200':
+          description: Kontakt funnet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktResponse'
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+
+    put:
+      summary: Oppdater en kontakt
+      description: |
+        Oppdaterer en eksisterende kontakt.
+        Send kun feltene du vil oppdatere.
+      operationId: oppdaterKontakt
+      tags:
+        - Kontakt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OppdaterKontaktRequest'
+            example:
+              navn:
+                fornavn: "Ola"
+                etternavn: "Hansen"
+              telefon:
+                - telefonType: "PRIVAT"
+                  telefonnummer: "+47 123 45 678"
+      responses:
+        '200':
+          description: Kontakt oppdatert
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KontaktResponse'
+        '400':
+          $ref: '#/components/responses/UgyldigForesporsel'
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+        '409':
+          $ref: '#/components/responses/Konflikt'
+
+    delete:
+      summary: Slett en kontakt
+      description: Fjerner kontakten fra adresseboken permanent.
+      operationId: slettKontakt
+      tags:
+        - Kontakt
+      responses:
+        '204':
+          description: Kontakt slettet
+        '404':
+          $ref: '#/components/responses/IkkeFunnet'
+
+# ============================================================================
+# COMPONENTS
+# Gjenbrukbare definisjoner. Alt under her kan refereres med $ref.
+# ============================================================================
+components:
+
+  # --------------------------------------------------------------------------
+  # PARAMETERS - Gjenbrukbare parametere
+  # --------------------------------------------------------------------------
+  parameters:
+    AdressebokIdPath:
+      name: adressebokId
+      in: path
+      required: true
+      description: Unik identifikator for adresseboken (UUID)
+      schema:
+        type: string
+        format: uuid
+      example: "550e8400-e29b-41d4-a716-446655440000"
+
+    KontaktIdPath:
+      name: kontaktId
+      in: path
+      required: true
+      description: Unik identifikator for kontakten (UUID)
+      schema:
+        type: string
+        format: uuid
+      example: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+
+  # --------------------------------------------------------------------------
+  # RESPONSES - Gjenbrukbare feilresponser
+  # --------------------------------------------------------------------------
+  responses:
+    IkkeFunnet:
+      description: Ressursen ble ikke funnet
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Feilmelding'
+          example:
+            status: 404
+            melding: "Ressursen ble ikke funnet"
+            tidspunkt: "2024-01-15T10:30:00Z"
+
+    UgyldigForesporsel:
+      description: Forespørselen inneholder ugyldige data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Valideringsfeil'
+          example:
+            status: 400
+            melding: "Validering feilet"
+            tidspunkt: "2024-01-15T10:30:00Z"
+            feil:
+              - felt: "navn.fornavn"
+                melding: "Fornavn kan ikke være tomt"
+
+    Konflikt:
+      description: Forespørselen skaper en konflikt (f.eks. duplikat navn)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Feilmelding'
+          example:
+            status: 409
+            melding: "En kontakt med dette navnet finnes allerede"
+            tidspunkt: "2024-01-15T10:30:00Z"
+
+  # --------------------------------------------------------------------------
+  # SCHEMAS - Datamodeller
+  # --------------------------------------------------------------------------
+  schemas:
+
+    # ========== RESPONSE-OBJEKTER ==========
+    # Disse returneres fra API-et (har id, readonly-felt, etc.)
+
+    AdressebokResponse:
+      type: object
+      description: Representasjon av en adressebok (uten kontaktdetaljer)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unik identifikator
+          readOnly: true
+        antallKontakter:
+          type: integer
+          description: Antall kontakter i adresseboken
+          readOnly: true
+      required:
+        - id
+        - antallKontakter
+
+    AdressebokMedKontakterResponse:
+      type: object
+      description: Adressebok med full liste over kontakter
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        kontakter:
+          type: array
+          items:
+            $ref: '#/components/schemas/KontaktResponse'
+      required:
+        - id
+        - kontakter
+
+    KontaktResponse:
+      type: object
+      description: Full representasjon av en kontakt
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        navn:
+          $ref: '#/components/schemas/Navn'
+        adresser:
+          type: array
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/Adresse'
+        epost:
+          type: array
+          maxItems: 3
+          items:
+            $ref: '#/components/schemas/Epost'
+        telefon:
+          type: array
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/Telefon'
+      required:
+        - id
+        - navn
+
+    # ========== REQUEST-OBJEKTER ==========
+    # Disse sendes TIL API-et (ingen id, kun data fra klient)
+
+    OpprettKontaktRequest:
+      type: object
+      description: Data for å opprette en ny kontakt
+      properties:
+        navn:
+          $ref: '#/components/schemas/Navn'
+      required:
+        - navn
+
+    OppdaterKontaktRequest:
+      type: object
+      description: |
+        Data for å oppdatere en kontakt.
+        Alle felt er valgfrie - send kun det du vil endre.
+      properties:
+        navn:
+          $ref: '#/components/schemas/Navn'
+        adresser:
+          type: array
+          maxItems: 2
+          description: Erstatter alle eksisterende adresser
+          items:
+            $ref: '#/components/schemas/Adresse'
+        epost:
+          type: array
+          maxItems: 3
+          description: Erstatter alle eksisterende e-postadresser
+          items:
+            $ref: '#/components/schemas/Epost'
+        telefon:
+          type: array
+          maxItems: 10
+          description: Erstatter alle eksisterende telefonnumre
+          items:
+            $ref: '#/components/schemas/Telefon'
+
+    # ========== VERDI-OBJEKTER ==========
+    # Gjenbrukes i både request og response
+
+    Navn:
+      type: object
+      description: Navn på en kontakt
+      properties:
+        fornavn:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: "Ola"
+        etternavn:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: "Nordmann"
+      required:
+        - fornavn
+        - etternavn
+
+    Adresse:
+      type: object
+      description: Fysisk adresse
+      properties:
+        adresseType:
+          $ref: '#/components/schemas/AdresseType'
+        gatenavn:
+          type: string
+          example: "Storgata"
+        gatenummer:
+          type: string
+          example: "1A"
+        postnummer:
+          type: string
+          pattern: '^\d{4}$'
+          example: "0123"
+        by:
+          type: string
+          example: "Oslo"
+        land:
+          type: string
+          example: "Norge"
+      required:
+        - adresseType
+        - gatenavn
+        - postnummer
+        - by
+
+    Epost:
+      type: object
+      description: E-postadresse
+      properties:
+        epostAdresse:
+          type: string
+          format: email
+          example: "ola.nordmann@example.com"
+      required:
+        - epostAdresse
+
+    Telefon:
+      type: object
+      description: Telefonnummer med type
+      properties:
+        telefonType:
+          $ref: '#/components/schemas/TelefonType'
+        telefonnummer:
+          type: string
+          example: "+47 123 45 678"
+      required:
+        - telefonType
+        - telefonnummer
+
+    # ========== ENUMS ==========
+
+    AdresseType:
+      type: string
+      description: Type adresse
+      enum:
+        - PRIVAT
+        - JOBB
+
+    TelefonType:
+      type: string
+      description: Type telefonnummer
+      enum:
+        - PRIVAT
+        - JOBB
+        - ANNET
+
+    # ========== FEILMELDINGER ==========
+
+    Feilmelding:
+      type: object
+      description: Standard feilmelding
+      properties:
+        status:
+          type: integer
+          description: HTTP-statuskode
+        melding:
+          type: string
+          description: Beskrivelse av feilen
+        tidspunkt:
+          type: string
+          format: date-time
+          description: Når feilen oppsto
+      required:
+        - status
+        - melding
+        - tidspunkt
+
+    Valideringsfeil:
+      type: object
+      description: Feilmelding med valideringsfeil
+      allOf:
+        - $ref: '#/components/schemas/Feilmelding'
+        - type: object
+          properties:
+            feil:
+              type: array
+              description: Liste over valideringsfeil
+              items:
+                type: object
+                properties:
+                  felt:
+                    type: string
+                    description: Hvilket felt som feilet
+                  melding:
+                    type: string
+                    description: Beskrivelse av valideringsfeilen

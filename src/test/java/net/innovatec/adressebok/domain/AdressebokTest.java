@@ -31,7 +31,7 @@ public class AdressebokTest {
     void testLeggTilKontakt_IkkeLovMedIdentiskeNavn() {
 
         KontaktId testId = new KontaktId(UUID.randomUUID());
-        Navn navn = new Navn("Ali", "Smith");
+        Navn navn = new Navn("Jane", "Smith");
         Kontakt kontakt = new Kontakt(testId, navn);
         adressebok.leggTilKontakt(kontakt);
 
@@ -40,7 +40,7 @@ public class AdressebokTest {
             adressebok.leggTilKontakt(kontakt);
         });
 
-        assertEquals("En kontakt med navnet Ali Smith finnes allerede.", exception.getMessage());
+        assertEquals("En kontakt med navnet Jane Smith finnes allerede.", exception.getMessage());
     }
 
     @Test
@@ -182,6 +182,11 @@ public class AdressebokTest {
     @Test
     void testSøkKontakt_VellykketSøkMedKriterie() {
 
+        KontaktId testId = new KontaktId(UUID.randomUUID());
+        Kontakt kontakt = new Kontakt(testId, new Navn("Maria", "Stone"));
+        adressebok.leggTilKontakt(kontakt);
+
+        assertEquals("Maria Stone", adressebok.søkKontakt(new Navn("Maria", "Stone")));
     }
 
     @Test
