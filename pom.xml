@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.acme</groupId>
     <artifactId>code-with-quarkus</artifactId>
@@ -14,7 +16,7 @@
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.24.5</quarkus.platform.version>
         <open-api-generator.version>2.13.0-lts</open-api-generator.version>
-        <mapstruct.version>1.6.3</mapstruct.version>        
+        <mapstruct.version>1.6.3</mapstruct.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
     </properties>
@@ -40,32 +42,32 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
         </dependency>
-		<dependency>
-		  <groupId>io.quarkus</groupId>
-		  <artifactId>quarkus-rest-jackson</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>io.quarkus</groupId>
-    		<artifactId>quarkus-hibernate-validator</artifactId>
-		</dependency>
-	    <dependency>
-		  <groupId>io.quarkus</groupId>
-		  <artifactId>quarkus-smallrye-openapi</artifactId>
-		</dependency>
-    <dependency>
-        <groupId>io.quarkiverse.openapi.generator</groupId>
-        <artifactId>quarkus-openapi-generator-server</artifactId>
-        <version>${open-api-generator.version}</version>
-    </dependency>		
-    <dependency>
-        <groupId>org.mapstruct</groupId>
-        <artifactId>mapstruct</artifactId>
-        <version>${mapstruct.version}</version>
-    </dependency>
-		<dependency>
-		  <groupId>io.quarkus</groupId>
-		  <artifactId>quarkus-swagger-ui</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.openapi.generator</groupId>
+            <artifactId>quarkus-openapi-generator-server</artifactId>
+            <version>${open-api-generator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-swagger-ui</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -101,7 +103,7 @@
                 <version>${compiler-plugin.version}</version>
                 <configuration>
                     <source>21</source> <!-- or your Java version -->
-                    <target>21</target> <!-- or your Java version -->                
+                    <target>21</target> <!-- or your Java version -->
                     <parameters>true</parameters>
                     <annotationProcessorPaths>
                         <!-- MapStruct annotation processor -->
@@ -137,7 +139,8 @@
                 </executions>
                 <configuration>
                     <systemPropertyVariables>
-                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                        <native.image.path>
+                            ${project.build.directory}/${project.build.finalName}-runner</native.image.path>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
@@ -164,7 +167,26 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>   
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>add-jaxrs-generated-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/jax-rs</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

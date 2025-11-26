@@ -5,4 +5,4 @@
  * Dette er hjertet av applikasjonen og skal være uavhengig av tekniske detaljer.
  */
 
-package net.innovatec.adressebok.domain;
+package net.innovatec.adressebok.domain.model;

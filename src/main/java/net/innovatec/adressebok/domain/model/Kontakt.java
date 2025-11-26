@@ -1,4 +1,4 @@
-package net.innovatec.adressebok.domain;
+package net.innovatec.adressebok.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;

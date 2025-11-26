@@ -10,6 +10,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import net.innovatec.adressebok.domain.model.Adresse;
+import net.innovatec.adressebok.domain.model.AdresseType;
+import net.innovatec.adressebok.domain.model.Epost;
+import net.innovatec.adressebok.domain.model.Kontakt;
+import net.innovatec.adressebok.domain.model.KontaktId;
+import net.innovatec.adressebok.domain.model.Navn;
+import net.innovatec.adressebok.domain.model.Telefon;
+import net.innovatec.adressebok.domain.model.TelefonType;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class KontaktTest {
 
