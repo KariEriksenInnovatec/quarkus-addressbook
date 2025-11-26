@@ -13,6 +13,8 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.24.5</quarkus.platform.version>
+        <open-api-generator.version>2.13.0-lts</open-api-generator.version>
+        <mapstruct.version>1.6.3</mapstruct.version>        
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
     </properties>
@@ -41,35 +43,28 @@
 		<dependency>
 		  <groupId>io.quarkus</groupId>
 		  <artifactId>quarkus-rest-jackson</artifactId>
-		</dependency>    
+		</dependency>
+		<dependency>
+		    <groupId>io.quarkus</groupId>
+    		<artifactId>quarkus-hibernate-validator</artifactId>
+		</dependency>
 	    <dependency>
 		  <groupId>io.quarkus</groupId>
 		  <artifactId>quarkus-smallrye-openapi</artifactId>
 		</dependency>
+    <dependency>
+        <groupId>io.quarkiverse.openapi.generator</groupId>
+        <artifactId>quarkus-openapi-generator-server</artifactId>
+        <version>${open-api-generator.version}</version>
+    </dependency>		
+    <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${mapstruct.version}</version>
+    </dependency>
 		<dependency>
 		  <groupId>io.quarkus</groupId>
 		  <artifactId>quarkus-swagger-ui</artifactId>
-		</dependency>
-		<!-- Bean Validation for validering av request/response -->
-		<dependency>
-		  <groupId>io.quarkus</groupId>
-		  <artifactId>quarkus-hibernate-validator</artifactId>
-		</dependency>
-		<!-- Jackson annotations for JSON serialization -->
-		<dependency>
-		  <groupId>com.fasterxml.jackson.core</groupId>
-		  <artifactId>jackson-annotations</artifactId>
-		</dependency>
-		<!-- Bean Validation API -->
-		<dependency>
-		  <groupId>jakarta.validation</groupId>
-		  <artifactId>jakarta.validation-api</artifactId>
-		</dependency>
-		<!-- Swagger annotations for generated code -->
-		<dependency>
-		  <groupId>io.swagger.core.v3</groupId>
-		  <artifactId>swagger-annotations-jakarta</artifactId>
-		  <version>2.2.20</version>
 		</dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -95,7 +90,7 @@
                         <goals>
                             <goal>build</goal>
                             <goal>generate-code</goal>
-                            <goal>generate-code-tests</goal>
+                            <!-- <goal>generate-code-tests</goal> -->
                             <goal>native-image-agent</goal>
                         </goals>
                     </execution>
@@ -105,68 +100,19 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
                 <configuration>
+                    <source>21</source> <!-- or your Java version -->
+                    <target>21</target> <!-- or your Java version -->                
                     <parameters>true</parameters>
+                    <annotationProcessorPaths>
+                        <!-- MapStruct annotation processor -->
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <!-- Add other processors like Lombok if needed -->
+                    </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <!-- OpenAPI Generator Plugin -->
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.2.0</version>
-                <executions>
-                    <execution>
-                        <id>generate-adressebok-api</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <!-- Path til OpenAPI spec -->
-                            <inputSpec>${project.basedir}/src/main/openapi/adressebok.yaml</inputSpec>
-
-                            <!-- Generator type - vi bruker jaxrs-spec for å generere interfaces -->
-                            <generatorName>jaxrs-spec</generatorName>
-
-                            <!-- Base package for generert kode -->
-                            <apiPackage>net.innovatec.adressebok.api</apiPackage>
-                            <modelPackage>net.innovatec.adressebok.api.model</modelPackage>
-                            <invokerPackage>net.innovatec.adressebok.api.handler</invokerPackage>
-
-                            <!-- Output-mappe -->
-                            <output>${project.build.directory}/generated-sources/openapi</output>
-
-                            <!-- Konfigurasjonsopsjoner -->
-                            <configOptions>
-                                <!-- Bruk Jakarta EE (ikke javax) -->
-                                <useJakartaEe>true</useJakartaEe>
-
-                                <!-- Generer kun interfaces, ikke implementasjon -->
-                                <interfaceOnly>true</interfaceOnly>
-
-                                <!-- Bruk Bean Validation -->
-                                <useBeanValidation>true</useBeanValidation>
-
-                                <!-- Generer builder pattern for modeller -->
-                                <returnResponse>true</returnResponse>
-
-                                <!-- Java 21 kompatibilitet -->
-                                <sourceFolder>src/main/java</sourceFolder>
-
-                                <!-- Bruk Optional for query parametere -->
-                                <useOptional>false</useOptional>
-
-                                <!-- Dato/tid håndtering -->
-                                <dateLibrary>java8</dateLibrary>
-                            </configOptions>
-
-                            <!-- Hvilke filer som skal genereres -->
-                            <generateApiTests>false</generateApiTests>
-                            <generateModelTests>false</generateModelTests>
-                            <generateApiDocumentation>false</generateApiDocumentation>
-                            <generateModelDocumentation>false</generateModelDocumentation>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -197,6 +143,28 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.coderplus.maven.plugins</groupId>
+                <artifactId>copy-rename-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-file</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <sourceFile>src/main/resources/openapi/adressebok.yaml</sourceFile>
+                                    <destinationFile>src/main/resources/META-INF/openapi.yaml</destinationFile>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>   
         </plugins>
     </build>
 
