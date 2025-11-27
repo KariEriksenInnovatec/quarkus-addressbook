@@ -1,6 +1,7 @@
 package net.innovatec.adressebok.infrastructure.mapper;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -21,41 +22,41 @@ import net.innovatec.adressebok.domain.model.Telefon;
 
 @Mapper(componentModel = "cdi")
 public interface AdressebokMapper {
-    // Mapping for Adressebok    
+    // Mapping for Adressebok
     default Adressebok toDomain(net.innovatec.adressebok.infrastructure.api.beans.Adressebok dto) {
         AdressebokId bokid = toDomain(dto.getId());
         Adressebok bok = new Adressebok(bokid);
-        for(net.innovatec.adressebok.infrastructure.api.beans.Kontakt dtoElement: dto.getKontakter()) {
+        for (net.innovatec.adressebok.infrastructure.api.beans.Kontakt dtoElement : dto.getKontakter()) {
             bok.leggTilKontakt(toDomain(dtoElement));
         }
-        return bok; 
+        return bok;
     }
 
     default AdressebokId toDomain(net.innovatec.adressebok.infrastructure.api.beans.AdressebokId dto) {
         return dto != null ? new AdressebokId(dto.getValue()) : null;
     }
-    
+
     default AdressebokId stringToAdressebokId(String id) {
         return id != null ? new AdressebokId(UUID.fromString(id)) : null;
     }
-        
+
     default net.innovatec.adressebok.infrastructure.api.beans.Adressebok toDto(Adressebok adressebok) {
         net.innovatec.adressebok.infrastructure.api.beans.Adressebok dto = new net.innovatec.adressebok.infrastructure.api.beans.Adressebok();
-        dto.setId(toDto(adressebok.hentId())); 
+        dto.setId(toDto(adressebok.hentId()));
         dto.setKontakter(mapKontakterToList(adressebok.hentKontakter()));
-        return dto;        
+        return dto;
     }
 
     @Mapping(source = "id", target = "value")
     net.innovatec.adressebok.infrastructure.api.beans.AdressebokId toDto(AdressebokId adressebokid);
-    
+
     // Custom method to map Map<KontaktId, Kontakt> to List<KontaktDTO>
-    default List<net.innovatec.adressebok.infrastructure.api.beans.Kontakt> mapKontakterToList(List<Kontakt> kontakter) {
-        return kontakter.stream()
-                .map(this::toDto) // Assuming you have a method to map Kontakt to KontaktDTO
+    default List<net.innovatec.adressebok.infrastructure.api.beans.Kontakt> mapKontakterToList(
+            List<Kontakt> kontakter) {
+        return kontakter.stream().map(this::toDto) // Assuming you have a method to map Kontakt to KontaktDTO
                 .collect(Collectors.toList());
     }
-    
+
     // Mapping for Kontakt
     default Kontakt toDomain(net.innovatec.adressebok.infrastructure.api.beans.Kontakt dto) {
         KontaktId kontaktId = toDomain(dto.getId());
@@ -72,7 +73,7 @@ public interface AdressebokMapper {
         }
         return kontakt;
     }
-        
+
     default net.innovatec.adressebok.infrastructure.api.beans.Kontakt toDto(Kontakt kontakt) {
         net.innovatec.adressebok.infrastructure.api.beans.Kontakt dto = new net.innovatec.adressebok.infrastructure.api.beans.Kontakt();
         net.innovatec.adressebok.infrastructure.api.beans.KontaktId dtoId = toDto(kontakt.hentId());
@@ -98,7 +99,7 @@ public interface AdressebokMapper {
     default KontaktId stringToKontaktId(String id) {
         return id != null ? new KontaktId(UUID.fromString(id)) : null;
     }
-    
+
     default net.innovatec.adressebok.infrastructure.api.beans.KontaktId toDto(KontaktId kontaktid) {
         net.innovatec.adressebok.infrastructure.api.beans.KontaktId dtoId = new net.innovatec.adressebok.infrastructure.api.beans.KontaktId();
         dtoId.setValue(kontaktid.getId());
@@ -129,7 +130,8 @@ public interface AdressebokMapper {
     @Mapping(target = "adresser", source = "data.adresser")
     @Mapping(target = "epostadresser", source = "data.epostadresser")
     @Mapping(target = "telefonnumre", source = "data.telefonnumre")
-    net.innovatec.adressebok.infrastructure.api.beans.KontaktData toDto(KontaktData data);    
+    net.innovatec.adressebok.infrastructure.api.beans.KontaktData toDto(KontaktData data);
+
     // Mapping for Navn
     Navn toDomain(net.innovatec.adressebok.infrastructure.api.beans.Navn dto);
 

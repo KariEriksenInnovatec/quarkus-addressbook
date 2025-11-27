@@ -24,11 +24,41 @@ public final class Kontakt {
         this.data = data;
     }
 
-    public Kontakt(KontaktData data) {
+    private Kontakt(KontaktData data) {
         this.id = new KontaktId(); 
         this.data = data;
     }
+    
+    public static final Kontakt createNewKontakt(KontaktData data) {
+        Kontakt nyKontakt = new Kontakt(data.navn());
+        for(Adresse element: data.adresser()) {
+            nyKontakt.leggTilAdresse(element);
+        }
+        for(Epost element: data.epostadresser()) {
+            nyKontakt.leggTilEpostadresse(element);
+        }
+        for(Telefon element: data.telefonnumre()) {
+            nyKontakt.leggTilTelefonnummer(element);
+        }
+        
+        return new Kontakt(data);
+    }
 
+    public static final Kontakt createNewKontakt(KontaktId id, KontaktData data) {
+        Kontakt nyKontakt = new Kontakt(id, data.navn());
+        for(Adresse element: data.adresser()) {
+            nyKontakt.leggTilAdresse(element);
+        }
+        for(Epost element: data.epostadresser()) {
+            nyKontakt.leggTilEpostadresse(element);
+        }
+        for(Telefon element: data.telefonnumre()) {
+            nyKontakt.leggTilTelefonnummer(element);
+        }
+        
+        return new Kontakt(data);
+    }
+    
     public KontaktId hentId() {
         return id;
     }
@@ -50,7 +80,7 @@ public final class Kontakt {
     }
 
     public void leggTilAdresse(Adresse adresse) {
-        if (data.adresser().size() >= 2) throw new DomeneException("Man kan ikke legge til mer enn 2 adresser til kontakt!");
+        if (data.adresser().size() >= 2) throw new DomeneException("Man kan ikke legge til mer enn 2 adresser til kontakt!");                
         this.data = data.withAddedAdresse(adresse);
     }
 
@@ -66,7 +96,6 @@ public final class Kontakt {
     }
 
     public Epost opprettEpostadresse(String epostadresse) {
-        if (!epostadresse.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) throw new DomeneException("Dette er en ugyldig epostadresse!");
         return new Epost(epostadresse);
     }
 
@@ -91,7 +120,7 @@ public final class Kontakt {
     }
 
     public void leggTilTelefonnummer(Telefon telefon) {
-        if (data.telefonnumre().size() >= 10) throw new DomeneException("Man kan ikke legge til mer enn 10 telefonnummere til kontakt!");
+        if (data.telefonnumre().size() >= 10) throw new DomeneException("Man kan ikke legge til mer enn 10 telefonnummere til kontakt!");        
         this.data = data.withAddedTelefon(telefon);
     }
 

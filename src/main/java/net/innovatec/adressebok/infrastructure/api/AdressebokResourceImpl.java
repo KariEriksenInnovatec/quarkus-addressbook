@@ -11,6 +11,7 @@ import org.jboss.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -39,7 +40,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     private final ObjectMapper objectMapper = new ObjectMapper();    
 
     @Override
-    public Adressebok hentAdressebok(@NotNull String adressebokId) {
+    public Adressebok hentAdressebok(@Valid @NotNull String adressebokId) {
         try {
             net.innovatec.adressebok.domain.model.AdressebokId id = mapper.stringToAdressebokId(adressebokId);
             return mapper.toDto(service.hentAdressebok(id));
@@ -56,7 +57,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
 
     @Override
-    public void slettAdressebok(@NotNull String adressebokId) {
+    public void slettAdressebok(@Valid @NotNull String adressebokId) {
         try {
             service.slettAdressebok(mapper.stringToAdressebokId(adressebokId));
         } catch (IkkeFunnetDomeneException nfe) {
@@ -65,7 +66,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
 
     @Override
-    public AdressebokId importerAdressebok(@NotNull Adressebok bok) {
+    public AdressebokId importerAdressebok(@Valid @NotNull Adressebok bok) {
         try {
             net.innovatec.adressebok.domain.model.Adressebok domainAdressebok = mapper.toDomain(bok);
             net.innovatec.adressebok.domain.model.AdressebokId domainAdressebokId = service
@@ -77,7 +78,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
     
     @Override
-    public Response eksporterAdressebok(@NotNull String adressebokId) {
+    public Response eksporterAdressebok(@Valid @NotNull String adressebokId) {
         try {
             net.innovatec.adressebok.domain.model.Adressebok domainAdressebok = service.hentAdressebok(mapper.stringToAdressebokId(adressebokId));
 
@@ -99,7 +100,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
     
     @Override
-    public KontaktId opprettKontakt(@NotNull String adressebokId, @NotNull KontaktData dtoKontakt) {
+    public KontaktId opprettKontakt(@Valid @NotNull String adressebokId, @Valid @NotNull KontaktData dtoKontakt) {
         try {
             net.innovatec.adressebok.domain.model.Adressebok bok = service
                     .hentAdressebok(mapper.stringToAdressebokId(adressebokId));
@@ -118,7 +119,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
 
     @Override
-    public Kontakt hentKontakt(@NotNull String adressebokId, @NotNull String kontaktId) {
+    public Kontakt hentKontakt(@Valid @NotNull String adressebokId, @Valid @NotNull String kontaktId) {
         try {
             net.innovatec.adressebok.domain.model.Kontakt dmoKontakt = service
                     .hentKontakt(mapper.stringToAdressebokId(adressebokId), mapper.stringToKontaktId(kontaktId));
@@ -132,7 +133,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
 
     @Override
-    public void oppdaterKontakt(@NotNull String adressebokId, @NotNull String kontaktId, @NotNull KontaktData data) {
+    public void oppdaterKontakt(@Valid @NotNull String adressebokId, @Valid @NotNull String kontaktId, @Valid @NotNull KontaktData data) {
         try {
             net.innovatec.adressebok.domain.model.Adressebok bok = service
                     .hentAdressebok(mapper.stringToAdressebokId(adressebokId));
@@ -145,7 +146,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
 
     @Override
-    public void slettKontakt(@NotNull String adressebokId, @NotNull String kontaktId) {
+    public void slettKontakt(@Valid @NotNull String adressebokId, @Valid @NotNull String kontaktId) {
         try {
             service.slettKontakt(mapper.stringToAdressebokId(adressebokId), mapper.stringToKontaktId(kontaktId));
         } catch (DomeneException dme) {
@@ -154,7 +155,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     }
 
     @Override
-    public List<Kontakt> sokKontakt(@NotNull String adressebokId, String navn) {
+    public List<Kontakt> sokKontakt(@Valid @NotNull String adressebokId, @Valid String navn) {
         try {
             List<net.innovatec.adressebok.domain.model.Kontakt> resultat = service
                     .søkKontakt(mapper.stringToAdressebokId(adressebokId), navn);

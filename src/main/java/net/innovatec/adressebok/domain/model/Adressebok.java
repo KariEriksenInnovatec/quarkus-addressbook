@@ -22,7 +22,7 @@ public class Adressebok {
 		return id;
 	}
         
-    public void leggTilKontakt(KontaktId id, KontaktData data) {
+    private void leggTilKontakt(KontaktId id, KontaktData data) {
         if( kontakter.size() > 100) throw new DomeneException("Man kan ikke ha mer enn 100 kontakter i adressebok!");
         if( finnesNavn(data.navn())) throw new DomeneException("Kan ikke legge til kontakt med navn som allerede finnes!");
         kontakter.put(id, data);
@@ -47,7 +47,8 @@ public class Adressebok {
 
 	public void oppdatereKontakt(KontaktId id, KontaktData data) {
         if( !kontakter.keySet().contains(id)) throw new IkkeFunnetDomeneException("Angitt KontaktId ikke funnet!", Optional.of(this.id), Optional.of(id));
-	    kontakter.put(id, data);
+	    Kontakt kontakt = Kontakt.createNewKontakt(id, data);
+	    leggTilKontakt(kontakt);	    
 	}
 
 	public Boolean slettKontakt(KontaktId id) {

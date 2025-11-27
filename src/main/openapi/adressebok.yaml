@@ -466,6 +466,7 @@ components:
         properties:
             epostadresse:
                 type: string
+                format: email
     Telefon:
         description: En telefonnummer til kontakt.
         type: object

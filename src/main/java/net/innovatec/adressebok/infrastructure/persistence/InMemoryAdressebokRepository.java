@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import net.innovatec.adressebok.domain.AdressebokRepository;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
+import net.innovatec.adressebok.domain.model.DomeneException;
 import net.innovatec.adressebok.domain.model.IkkeFunnetDomeneException;
 
 @IfBuildProfile("dev")
@@ -23,6 +24,7 @@ public final class InMemoryAdressebokRepository implements AdressebokRepository 
 	}
 	
 	public AdressebokId leggTilAdressebok(Adressebok bok) {
+        if(adressebøker.containsKey(bok.hentId())) throw new DomeneException("Adressessebok finnes allerede!");
 	    adressebøker.put(bok.hentId(), bok);
 	    return bok.hentId();
 	}
@@ -39,6 +41,7 @@ public final class InMemoryAdressebokRepository implements AdressebokRepository 
 
 	public Boolean slettAdressebok(String uuid) {
 		AdressebokId adressebokId = new AdressebokId(uuid);
+        if(!adressebøker.containsKey(adressebokId)) throw new IkkeFunnetDomeneException("Adressebok eksisterer ikke!");
 		return slettAdressebok(adressebokId);
 	}
 

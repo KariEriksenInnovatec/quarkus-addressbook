@@ -2,7 +2,6 @@ package net.innovatec.adressebok.application;
 
 import java.util.List;
 
-import io.quarkus.arc.profile.IfBuildProfile;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import net.innovatec.adressebok.domain.AdressebokRepository;
@@ -15,7 +14,7 @@ import net.innovatec.adressebok.domain.model.KontaktId;
 import net.innovatec.adressebok.domain.model.Navn;
 
 /**
- * Tjeneste som ekspoenerer metoder for å oppdatere og hente ut objekt fra
+ * Tjeneste som eksponerer metoder for å oppdatere og hente ut objekt fra
  * domene modellen. Den har ansvar for å mappe til/fra DTO og domene modellene
  */
 
@@ -52,7 +51,7 @@ public class AdressebokServiceImpl implements AdressebokService {
 
     public KontaktId opprettOgLeggTilKontakt(AdressebokId adressebokId, KontaktData data) {
         Adressebok bok = hentAdressebok(adressebokId);
-        Kontakt nyKontakt = new Kontakt(data);
+        Kontakt nyKontakt = Kontakt.createNewKontakt(data);
         bok.leggTilKontakt(nyKontakt);
         return nyKontakt.hentId();
     }
