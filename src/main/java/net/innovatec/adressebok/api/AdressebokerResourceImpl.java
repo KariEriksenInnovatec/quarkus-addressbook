@@ -28,6 +28,8 @@ public class AdressebokerResourceImpl implements AdressebokerResource {
     @Override
     public AdressebokResponse opprettAdressebok() {
         
+        // Kaller service-laget (som implementerer hva som skjer)
+        // Mapper http-data (api-format) til service-kall (domene-format)
         AdressebokId adressebokId = service.opprettAdressebok();
 
         AdressebokResponse response = new AdressebokResponse();

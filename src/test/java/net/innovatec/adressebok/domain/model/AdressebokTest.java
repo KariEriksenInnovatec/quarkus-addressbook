@@ -1,4 +1,4 @@
-package net.innovatec.adressebok.domain;
+package net.innovatec.adressebok.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -9,11 +9,6 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import net.innovatec.adressebok.domain.model.Adressebok;
-import net.innovatec.adressebok.domain.model.Kontakt;
-import net.innovatec.adressebok.domain.model.KontaktId;
-import net.innovatec.adressebok.domain.model.Navn;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdressebokTest {
