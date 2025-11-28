@@ -12,8 +12,8 @@ import net.innovatec.adressebok.domain.model.AdressebokId;
 import net.innovatec.adressebok.domain.model.DomeneException;
 import net.innovatec.adressebok.domain.model.IkkeFunnetDomeneException;
 
-@IfBuildProfile("dev")
-@ApplicationScoped
+// @ApplicationScoped
+// @IfBuildProfile("dev")
 public final class InMemoryAdressebokRepository implements AdressebokRepository {
 	private Map<AdressebokId, Adressebok> adressebøker = new HashMap<AdressebokId, Adressebok>();
 

@@ -14,9 +14,13 @@ public final class Kontakt {
         this.data = new KontaktData(navn, Set.of(), Set.of(), Set.of());
     }
 
-    public Kontakt(Navn navn) {
+    private Kontakt(Navn navn) {
         this.id = new KontaktId(); 
         this.data = new KontaktData(navn, Set.of(), Set.of(), Set.of());
+    }
+
+    public static final Kontakt createNewKontakt(Navn navn) {
+        return new Kontakt(navn);        
     }
     
     public Kontakt(KontaktId id, KontaktData data) {

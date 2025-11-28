@@ -14,5 +14,5 @@ public interface AdressebokRepository {
 
 	public Boolean slettAdressebok(String uuid);
 
-	public Boolean slettAdressebok(AdressebokId adressebokId);	
+	public Boolean slettAdressebok(AdressebokId adressebokId);
 }

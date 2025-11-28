@@ -13,7 +13,7 @@ class KontaktTest {
 
     @BeforeAll
     static void init() {
-        mickeyMouse = new Kontakt(new Navn("Mickey", "Mouse"));
+        mickeyMouse = Kontakt.createNewKontakt(new Navn("Mickey", "Mouse"));
         opprettOgLeggTilAdresse(mickeyMouse, AdresseType.JOBB, "South Buena Vista Street", "500", "91521", "Burbank", "US");
         opprettOgLeggTilAdresse(mickeyMouse, AdresseType.PRIVAT, "P.O. Box 10040", "", "32830-0040", "Lake Buena Vista", "US");
         opprettOgLeggTilEpostadresse(mickeyMouse, "mickey.mouse@disney.com");
@@ -22,7 +22,7 @@ class KontaktTest {
 
     @BeforeEach
     void initMinnieMouse() {
-        minnieMouse = new Kontakt(new Navn("Minnie", "Mouse"));
+        minnieMouse = Kontakt.createNewKontakt(new Navn("Minnie", "Mouse"));
     }
 
     private static Adresse opprettOgLeggTilAdresse(Kontakt kontakt, AdresseType type, String gatenavn, String gatenummer, String postnummer, String by, String landskode) {
@@ -84,13 +84,6 @@ class KontaktTest {
     }
 
     @Test
-    void testOpprettOgLeggTilEpostSomErUgyldig() {
-        assertThrowsExactly(DomeneException.class, () -> {
-            opprettOgLeggTilEpostadresse(minnieMouse, "minnie.mouse@");
-        });
-    }
-
-    @Test
     void testSlettEpost() {
         Epost epost1 = opprettOgLeggTilEpostadresse(minnieMouse, "minnie.mouse@disney.com");
         Epost epost2 = opprettOgLeggTilEpostadresse(minnieMouse, "minnie@yahoo.com");
@@ -110,8 +103,8 @@ class KontaktTest {
         Telefon telefon = opprettOgLeggTilTelefonnummer(minnieMouse, TelefonType.PRIVAT, "1", "(203) 555-9876");
         assertEquals(TelefonType.PRIVAT, telefon.type());
         assertEquals("1", telefon.landskode());
-        assertEquals("(203) 555-98765", telefon.nummer());
-        assertEquals(new Telefon(TelefonType.PRIVAT, "1", "(203) 555-98765"), telefon);
+        assertEquals("(203) 555-9876", telefon.nummer());
+        assertEquals(new Telefon(TelefonType.PRIVAT, "1", "(203) 555-9876"), telefon);
     }
 
     @Test

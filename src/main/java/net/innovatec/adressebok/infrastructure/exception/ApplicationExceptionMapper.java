@@ -18,6 +18,7 @@ public class ApplicationExceptionMapper implements ExceptionMapper<ApplicationEx
     public Response toResponse(ApplicationException exception) {
         String instanceUri = null;
         ProblemDetails problemDetails = null;
+        Status status = Response.Status.BAD_REQUEST;
 
         if (exception.getCause() instanceof DomeneException) {
             DomeneException cause = (DomeneException) exception.getCause();
@@ -26,7 +27,6 @@ public class ApplicationExceptionMapper implements ExceptionMapper<ApplicationEx
             Optional<KontaktId> kontaktId = cause.getKontaktId().isPresent() ? cause.getKontaktId()
                     : exception.getKontaktId();
 
-            Status status = null;
 
             if (exception.getCause() instanceof IkkeFunnetDomeneException) {
                 status = Response.Status.NOT_FOUND;
@@ -45,7 +45,7 @@ public class ApplicationExceptionMapper implements ExceptionMapper<ApplicationEx
                     instanceUri);
         }
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(problemDetails).type("application/problem+json")
+        return Response.status(status).entity(problemDetails).type("application/problem+json")
                 .build();
     }
 

@@ -430,9 +430,11 @@ components:
         properties:
             fornavn:
                 type: string
+                minLength: 1
                 maxLength: 100
             etternavn:
                 type: string
+                minLength: 1
                 maxLength: 50
     Adresse:
         description: En adresse der kontakt jobber eller bor.

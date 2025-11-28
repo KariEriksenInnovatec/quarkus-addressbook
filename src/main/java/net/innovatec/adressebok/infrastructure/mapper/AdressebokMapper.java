@@ -1,7 +1,6 @@
 package net.innovatec.adressebok.infrastructure.mapper;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -10,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import net.innovatec.adressebok.domain.model.Adresse;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
@@ -20,6 +20,7 @@ import net.innovatec.adressebok.domain.model.KontaktId;
 import net.innovatec.adressebok.domain.model.Navn;
 import net.innovatec.adressebok.domain.model.Telefon;
 
+@ApplicationScoped
 @Mapper(componentModel = "cdi")
 public interface AdressebokMapper {
     // Mapping for Adressebok

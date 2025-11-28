@@ -58,7 +58,7 @@ public class Adressebok {
 	public List<Kontakt> søkKontakt(String kriterie) {
 		List<Kontakt> result = new ArrayList<Kontakt>();
 		for (Kontakt kontakt: hentKontakter()) {
-			if(kontakt.hentNavn().fullnavn().matches(".*" + kriterie + ".*")) {
+			if(kontakt.hentNavn().fullnavn().matches(kriterie)) {
 				result.add(kontakt);
 			}
 		}

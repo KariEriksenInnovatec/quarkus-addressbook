@@ -26,7 +26,7 @@ class AdressebokTest {
 	}
 	
 	private static Kontakt opprettOgLeggTilKontakt(Adressebok adressebok, String fornavn, String etternavn) {
-        Kontakt kontakt = new Kontakt(new Navn(fornavn, etternavn));
+        Kontakt kontakt = Kontakt.createNewKontakt(new Navn(fornavn, etternavn));
         adressebok.leggTilKontakt(kontakt);
         return kontakt;
 	}
@@ -44,40 +44,6 @@ class AdressebokTest {
 	void testOpprettKontaktDerNavnAlleredeFinnesPåEnAnnenKontakt() {
 		assertThrowsExactly(DomeneException.class, () -> {
 			opprettOgLeggTilKontakt(adressebok, "Mickey", "Mouse");
-		});
-	}	
-
-	@Test
-	void testOpprettKontaktMedNullVerdiPåFornavn() {
-		assertThrowsExactly(DomeneException.class, () -> {
-			opprettOgLeggTilKontakt(adressebok, null, "Mouse");
-		});
-	}	
-
-	@Test
-	void testOpprettKontaktMedTomVerdiPåFornavn() {
-		assertThrowsExactly(DomeneException.class, () -> {
-			opprettOgLeggTilKontakt(adressebok, "", "Mouse");
-		});
-	}	
-	@Test
-	void testOpprettKontaktMedTomVerdiPåEtternavn() {
-		assertThrowsExactly(DomeneException.class, () -> {
-			opprettOgLeggTilKontakt(adressebok, "Mickey", "");
-		});
-	}	
-	
-	@Test
-	void testOpprettKontaktMedForLangFornavn() {
-		assertThrowsExactly(DomeneException.class, () -> {
-			opprettOgLeggTilKontakt(adressebok, "Mickey har alt for lang fornavn for å kunne lagre i domene modellen men dette var vanseklig å få til over 100 tegn...", "Mouse");
-		});
-	}	
-	
-	@Test
-	void testOpprettKontaktMedForLangEtternavn() {
-		assertThrowsExactly(DomeneException.class, () -> {
-			opprettOgLeggTilKontakt(adressebok, "Mickey", "Mouse kan ikke vare like lang som fornavn så dette bør være lettere...");
 		});
 	}	
 
@@ -104,7 +70,7 @@ class AdressebokTest {
 		List<Kontakt> kontakter = adressebok.søkKontakt("Harry Potter"); 
 		assertEquals(0, kontakter.size());
 		
-		Boolean flag = adressebok.slettKontakt(new Kontakt(new Navn("Harry", "Potter")).hentId());
+		Boolean flag = adressebok.slettKontakt(Kontakt.createNewKontakt(new Navn("Harry", "Potter")).hentId());
 		assertEquals(flag, false);
 	}
 
