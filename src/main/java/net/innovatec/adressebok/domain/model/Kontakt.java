@@ -32,6 +32,22 @@ public class Kontakt {
         this.navn = nyttNavn;
     }
 
+    public Navn getNavn() {
+        return hentNavn();
+    }
+
+    public List<Adresse> getAdresser() {
+        return adresser;
+    }
+
+    public List<Epost> getEpost() {
+        return epost;
+    }
+
+    public List<Telefon> getTelefon() {
+        return telefon;
+    }
+    
     public Adresse opprettAdresse(AdresseType adresseType, String gatenavn, String gatenummer, String postnummer,
             String by,
             String land) {

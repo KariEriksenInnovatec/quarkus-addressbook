@@ -24,6 +24,10 @@ public final class Adressebok {
         return kontakter;
     }
 
+    public List<Kontakt> getKontakter() {
+        return hentKontakter();
+    }
+
     public Kontakt opprettKontakt(Navn navn) {
 
         // Genererer kontaktId direkte i metoden

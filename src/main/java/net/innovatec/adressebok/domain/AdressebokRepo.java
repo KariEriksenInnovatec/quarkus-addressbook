@@ -1,9 +1,16 @@
 package net.innovatec.adressebok.domain;
 
-import net.innovatec.adressebok.domain.model.AdressebokId;
+import java.util.List;
+
+import net.innovatec.adressebok.domain.model.Adressebok;
 
 public interface AdressebokRepo {
 
-    public AdressebokId opprettAdressebok();
+    public List<Adressebok> hentAlleAdresseboker();
 
+    public Adressebok opprettAdressebok();
+
+    public Adressebok hentAdressebok(String adressebokId);
+
+    public void slettAdressebok(String adressebokId);
 }
