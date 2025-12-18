@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>7</zoom_level>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>756</x>
-      <y>49</y>
-      <w>329</w>
-      <h>168</h>
+      <x>330</x>
+      <y>42</y>
+      <w>282</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Aggregate root&gt;&gt;
 Adressebok
@@ -29,10 +29,10 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>903</x>
-      <y>210</y>
-      <w>35</w>
-      <h>105</h>
+      <x>456</x>
+      <y>180</y>
+      <w>30</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -42,10 +42,10 @@ m2=0..n</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>693</x>
-      <y>924</y>
-      <w>133</w>
-      <h>91</h>
+      <x>276</x>
+      <y>792</y>
+      <w>114</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>Adresse
 --
@@ -62,10 +62,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1232</x>
-      <y>714</y>
-      <w>119</w>
-      <h>49</h>
+      <x>738</x>
+      <y>612</y>
+      <w>102</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Navn
 --
@@ -77,10 +77,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1029</x>
-      <y>924</y>
-      <w>126</w>
-      <h>63</h>
+      <x>564</x>
+      <y>792</y>
+      <w>108</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>Telefon
 --
@@ -94,10 +94,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
-      <y>826</y>
-      <w>189</w>
-      <h>112</h>
+      <x>330</x>
+      <y>708</y>
+      <w>162</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -107,10 +107,10 @@ m2=0..2</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>917</x>
-      <y>826</y>
-      <w>210</w>
-      <h>112</h>
+      <x>468</x>
+      <y>708</y>
+      <w>180</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -120,10 +120,10 @@ m2=0..10</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1120</x>
-      <y>728</y>
-      <w>126</w>
-      <h>35</h>
+      <x>642</x>
+      <y>624</y>
+      <w>108</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
@@ -133,10 +133,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>693</x>
-      <y>1050</y>
-      <w>133</w>
-      <h>63</h>
+      <x>276</x>
+      <y>900</y>
+      <w>114</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 AdresseType
@@ -150,10 +150,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>756</x>
-      <y>1008</y>
-      <w>21</w>
-      <h>56</h>
+      <x>330</x>
+      <y>864</y>
+      <w>18</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -162,10 +162,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1029</x>
-      <y>1043</y>
-      <w>126</w>
-      <h>70</h>
+      <x>564</x>
+      <y>894</y>
+      <w>108</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
 TelefonType
@@ -180,10 +180,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1085</x>
-      <y>980</y>
-      <w>21</w>
-      <h>77</h>
+      <x>612</x>
+      <y>840</y>
+      <w>18</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 </panel_attributes>
@@ -192,10 +192,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>868</x>
-      <y>931</y>
-      <w>119</w>
-      <h>49</h>
+      <x>426</x>
+      <y>798</y>
+      <w>102</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>Epost
 --
@@ -206,10 +206,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>917</x>
-      <y>826</y>
-      <w>42</w>
-      <h>119</h>
+      <x>468</x>
+      <y>708</y>
+      <w>36</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
@@ -219,10 +219,10 @@ m2=0..10</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1225</x>
-      <y>105</y>
-      <w>119</w>
-      <h>21</h>
+      <x>732</x>
+      <y>90</y>
+      <w>102</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>AdresseBokId
 bg=cyan</panel_attributes>
@@ -231,10 +231,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1078</x>
-      <y>105</y>
-      <w>161</w>
-      <h>35</h>
+      <x>606</x>
+      <y>90</y>
+      <w>138</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
@@ -244,10 +244,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1225</x>
-      <y>651</y>
-      <w>119</w>
-      <h>21</h>
+      <x>732</x>
+      <y>558</y>
+      <w>102</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>KontaktId
 bg=cyan</panel_attributes>
@@ -256,10 +256,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1120</x>
-      <y>644</y>
-      <w>119</w>
-      <h>35</h>
+      <x>642</x>
+      <y>552</y>
+      <w>102</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 
@@ -269,17 +269,17 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
-      <y>616</y>
-      <w>427</w>
-      <h>217</h>
+      <x>282</x>
+      <y>528</y>
+      <w>366</w>
+      <h>186</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Aggregate&gt;&gt;
 KontaktData
 --
 - id: KontaktId 
-- navn: Navn
-- data: KontaktData
+- fornavn: Navn
+- etternavn: Navn
 - adresser: List&lt;Adresse&gt;
 - epostAdresser: List&lt;Epost&gt;
 - telefonnummerer: Lis&lt;Telefon&gt;
@@ -292,10 +292,10 @@ bg=cyan
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1225</x>
-      <y>364</y>
-      <w>119</w>
-      <h>63</h>
+      <x>732</x>
+      <y>312</y>
+      <w>102</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 DomainId
@@ -309,10 +309,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1281</x>
-      <y>119</y>
-      <w>21</w>
-      <h>259</h>
+      <x>780</x>
+      <y>102</y>
+      <w>18</w>
+      <h>222</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;350.0;10.0;10.0</additional_attributes>
@@ -320,10 +320,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1281</x>
-      <y>420</y>
-      <w>21</w>
-      <h>245</h>
+      <x>780</x>
+      <y>360</y>
+      <w>18</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;330.0</additional_attributes>
@@ -331,10 +331,10 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>581</x>
+      <x>180</x>
       <y>0</y>
-      <w>840</w>
-      <h>1141</h>
+      <w>720</w>
+      <h>978</h>
     </coordinates>
     <panel_attributes>lt=.
 Bounded Context</panel_attributes>
@@ -343,10 +343,10 @@ Bounded Context</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>868</x>
-      <y>1050</y>
-      <w>126</w>
-      <h>56</h>
+      <x>426</x>
+      <y>900</y>
+      <w>108</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Validering e-post
 format implementeres
@@ -356,10 +356,10 @@ direkte i konstruktor.</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>917</x>
-      <y>973</y>
-      <w>21</w>
-      <h>91</h>
+      <x>468</x>
+      <y>834</y>
+      <w>18</w>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
@@ -367,10 +367,10 @@ direkte i konstruktor.</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>707</x>
-      <y>301</y>
-      <w>427</w>
-      <h>217</h>
+      <x>288</x>
+      <y>258</y>
+      <w>366</w>
+      <h>186</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Aggregate&gt;&gt;
 Kontakt
@@ -394,10 +394,10 @@ bg=green
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>896</x>
-      <y>511</y>
-      <w>28</w>
-      <h>119</h>
+      <x>450</x>
+      <y>438</y>
+      <w>24</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 

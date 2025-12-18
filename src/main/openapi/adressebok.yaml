@@ -499,7 +499,7 @@ components:
              type: integer
           detail:
              type: string
-          insatnce:
+          instance:
              type: string   
     
                 

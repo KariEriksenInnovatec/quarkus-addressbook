@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import org.jboss.logging.Logger;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,7 +22,6 @@ import net.innovatec.adressebok.infrastructure.mapper.AdressebokMapper;
 
 @ApplicationScoped
 public class AdressebokResourceImpl implements AdressebokResource {
-    private final Logger log = Logger.getLogger(this.getClass());
 
     @Inject
     AdressebokServiceImpl service;

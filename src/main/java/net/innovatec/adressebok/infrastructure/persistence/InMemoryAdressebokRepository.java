@@ -4,8 +4,6 @@ package net.innovatec.adressebok.infrastructure.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.quarkus.arc.profile.IfBuildProfile;
-import jakarta.enterprise.context.ApplicationScoped;
 import net.innovatec.adressebok.domain.AdressebokRepository;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;

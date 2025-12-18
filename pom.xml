@@ -17,9 +17,16 @@
 		<quarkus.platform.version>3.24.5</quarkus.platform.version>
 		<!-- <open-api-generator.version>2.13.0-lts</open-api-generator.version> -->
 		<open-api-generator.version>3.0.0-SNAPSHOT</open-api-generator.version>
+		<quarkus-jooq.version>2.1.0</quarkus-jooq.version>
+		<flyway.version>11.8.2</flyway.version>
+		<jooq.version>3.19.22</jooq.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<skipITs>true</skipITs>
 		<surefire-plugin.version>3.5.3</surefire-plugin.version>
+		<db.driver>org.postgresql.Driver</db.driver>
+		<db.url>jdbc:postgresql://localhost:5432/innovatec</db.url>
+		<db.username>admin</db.username>
+		<db.password>admin123</db.password>
 	</properties>
 
 	<dependencyManagement>
@@ -60,7 +67,7 @@
 			<artifactId>quarkus-openapi-generator-server</artifactId>
 			<version>${open-api-generator.version}</version>
 		</dependency>
-		<dependency>
+    <dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
@@ -69,7 +76,42 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-swagger-ui</artifactId>
 		</dependency>
-		<dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
+    <!-- Used for runtime validation. For code generation the native Flyway plug-in is used. -->
+    <dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-flyway</artifactId>
+		</dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>		
+		<!-- It seems that this Quarkus plug-in doesn't play nice with Flyway. -->
+<!--		<dependency>
+			<groupId>io.quarkiverse.jooq</groupId>
+			<artifactId>quarkus-jooq</artifactId>
+			<version>${quarkus-jooq.version}</version>
+		</dependency>
+-->		
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq</artifactId>
+      <version>${jooq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq-meta</artifactId>
+      <version>${jooq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq-codegen</artifactId>
+      <version>${jooq.version}</version>
+    </dependency>
+    <dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
@@ -79,11 +121,11 @@
 			<artifactId>quarkus-junit5-mockito</artifactId>
 			<scope>test</scope>
 		</dependency>
-    <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>json-schema-validator</artifactId>
-      <scope>test</scope>
-    </dependency>			
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
@@ -127,6 +169,74 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+      <!-- We need this so that Flyway runs before JOOQ generates classes -->
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>${flyway.version}</version>
+        <executions>
+          <execution>
+            <!-- <phase>validate</phase> -->
+            <phase>generate-sources</phase>
+            <goals><goal>migrate</goal></goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jdbc-postgresql</artifactId>
+            <version>${quarkus.platform.version}</version>
+          </dependency>        
+        </dependencies>
+        <configuration>
+          <driver>${db.driver}</driver>
+          <url>${db.url}</url>
+          <user>${db.username}</user>
+          <password>${db.password}</password>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-codegen-maven</artifactId>
+        <version>${jooq.version}</version> 
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <jdbc>
+            <url>${db.url}</url>
+            <user>${db.username}</user>
+            <password>${db.password}</password>
+          </jdbc>
+          <generator>
+            <database>
+              <name>org.jooq.meta.postgres.PostgresDatabase</name>
+              <inputSchema>adressebok</inputSchema>
+              <forcedTypes>
+                <forcedType>
+                  <userType>net.innovatec.adressebok.domain.model.AdresseType</userType>
+                  <includeExpression>.*\.ADRESSE_TYPE</includeExpression>
+                  <enumConverter>true</enumConverter>
+                </forcedType>
+                <forcedType>
+                  <userType>net.innovatec.adressebok.domain.model.TelefonType</userType>
+                  <includeExpression>.*\.TELEFON_TYPE</includeExpression>
+                  <enumConverter>true</enumConverter>
+                </forcedType>
+              </forcedTypes>            
+            </database>
+            <target>
+              <packageName>net.innovatec.adressebok.dao</packageName>
+              <directory>target/generated-sources/jooq</directory>
+            </target>
+          </generator>
+        </configuration>
+      </plugin>     			
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
@@ -192,6 +302,7 @@
 						<configuration>
 							<sources>
 								<source>${project.build.directory}/generated-sources/annotations</source>
+                <source>${project.build.directory}/generated-sources/jooq</source>
 							</sources>
 						</configuration>
 					</execution>
