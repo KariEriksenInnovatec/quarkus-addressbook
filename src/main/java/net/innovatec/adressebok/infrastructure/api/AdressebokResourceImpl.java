@@ -51,7 +51,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
     public AdressebokId importerAdressebok(@Valid @NotNull Adressebok bok) {
         net.innovatec.adressebok.domain.model.Adressebok domainAdressebok = mapper.toDomain(bok);
         net.innovatec.adressebok.domain.model.AdressebokId domainAdressebokId = service
-                .importerAdressebok(domainAdressebok);
+                .lagreAdressebok(domainAdressebok);
         return mapper.toDto(domainAdressebokId);
     }
 
@@ -100,6 +100,7 @@ public class AdressebokResourceImpl implements AdressebokResource {
         net.innovatec.adressebok.domain.model.Adressebok bok = service
                 .hentAdressebok(mapper.stringToAdressebokId(adressebokId));
         bok.oppdatereKontakt(mapper.stringToKontaktId(kontaktId), mapper.toDomain(data));
+        service.lagreAdressebok(bok);
     }
 
     @Override

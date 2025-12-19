@@ -12,7 +12,7 @@ import net.innovatec.adressebok.domain.model.Navn;
 public interface AdressebokService {
     public AdressebokId opprettAdressebok();
     
-    public AdressebokId importerAdressebok(Adressebok bok);
+    public AdressebokId lagreAdressebok(Adressebok bok);
     
     public Adressebok hentAdressebok(AdressebokId id);
     

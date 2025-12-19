@@ -228,7 +228,17 @@
                   <includeExpression>.*\.TELEFON_TYPE</includeExpression>
                   <enumConverter>true</enumConverter>
                 </forcedType>
-              </forcedTypes>            
+                <forcedType>
+                  <userType>net.innovatec.adressebok.domain.model.KontaktId</userType>
+                  <converter>net.innovatec.adressebok.infrastructure.persistence.converters.KontaktIdConverter</converter>
+                  <includeExpression>.*\.KONTAKT_ID</includeExpression>
+                </forcedType>
+                <forcedType>
+                  <userType>net.innovatec.adressebok.domain.model.AdressebokId</userType>
+                  <converter>net.innovatec.adressebok.infrastructure.persistence.converters.AdressebokIdConverter</converter>
+                  <includeExpression>.*\.ADRESSEBOK_ID</includeExpression>
+                </forcedType>                          
+              </forcedTypes>
             </database>
             <target>
               <packageName>net.innovatec.adressebok.dao</packageName>

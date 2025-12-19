@@ -3,6 +3,11 @@ package net.innovatec.adressebok.api;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import jakarta.inject.Inject;
@@ -32,12 +38,38 @@ class AdressebokResourceTest {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8080;
         RestAssured.basePath = "/"; 
-        objectMapper = new ObjectMapper();        
+        objectMapper = new ObjectMapper();
     }
     
     @BeforeEach
     void setupForEach() {
         adressebokId = resource.opprettAdressebok();
+        Log.info("Opprettet ny adressebok: " + adressebokId);
+    }
+    
+    @AfterEach
+    void teardownForEach() {
+        resource.slettAdressebok(adressebokId.getValue().toString());
+        Log.info("Sletter adressebok: " + adressebokId);
+    }
+    
+
+    @Test
+    void testImportAdressebok() {
+        try {
+            String jsonBody = new String(Files.readAllBytes(Paths.get("src/test/resources/kontakter.json")));
+
+            given()
+                .header("content-type", "application/json")
+                .body(jsonBody)
+            .when()
+                .post("/adressebok/importer")
+            .then()
+                .statusCode(200)
+                .body("value", is("a1b2c3d4-e5f6-7890-1234-567890abcdef")); // Adjust the expected status code as needed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }        
     }
     
     @Test

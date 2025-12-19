@@ -1,0 +1,680 @@
+{
+  "id": {
+    "value": "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+  },
+  "kontakter": [
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000001"
+      },
+      "navn": {
+        "fornavn": "Lars",
+        "etternavn": "Hansen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Skoleveien",
+          "gatenummer": "15",
+          "postnummer": "0101",
+          "by": "Oslo",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "lars.hansen@example.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "900 12 345"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000002"
+      },
+      "navn": {
+        "fornavn": "Anna",
+        "etternavn": "Jensen"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Industrivegen",
+          "gatenummer": "5B",
+          "postnummer": "7000",
+          "by": "Trondheim",
+          "landkode": "NO"
+        },
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Hytteveien",
+          "gatenummer": "22",
+          "postnummer": "1450",
+          "by": "Nesodden",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "anna.jensen@work.no"
+        },
+        {
+          "epostadresse": "annajensen@gmail.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "47",
+          "telefonnummer": "221 00 001"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000003"
+      },
+      "navn": {
+        "fornavn": "Per",
+        "etternavn": "Olsen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Elvegata",
+          "gatenummer": "3",
+          "postnummer": "5000",
+          "by": "Bergen",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "per.olsen@fastmail.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "999 88 777"
+        },
+        {
+          "telefontype": "ANNET",
+          "landskode": "46",
+          "telefonnummer": "070 123 4567"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000004"
+      },
+      "navn": {
+        "fornavn": "Kari",
+        "etternavn": "Nordmann"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Main Street",
+          "gatenummer": "101",
+          "postnummer": "10001",
+          "by": "New York, NY",
+          "landkode": "US"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "kari.nordmann@globalcorp.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "1",
+          "telefonnummer": "(212) 555-1010"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000005"
+      },
+      "navn": {
+        "fornavn": "Erik",
+        "etternavn": "Moe"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Fjordveien",
+          "gatenummer": "33",
+          "postnummer": "6000",
+          "by": "Ålesund",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "erik.moe@hotmail.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "400 11 223"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000006"
+      },
+      "navn": {
+        "fornavn": "Sara",
+        "etternavn": "Bakke"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Sentrumsgata",
+          "gatenummer": "1",
+          "postnummer": "0150",
+          "by": "Oslo",
+          "landkode": "NO"
+        },
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Lilleveien",
+          "gatenummer": "8",
+          "postnummer": "0150",
+          "by": "Oslo",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "sara.bakke@osloconsult.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "47",
+          "telefonnummer": "234 56 789"
+        },
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "987 65 432"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000007"
+      },
+      "navn": {
+        "fornavn": "Thomas",
+        "etternavn": "Kristiansen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Sjøsiden",
+          "gatenummer": "44",
+          "postnummer": "4000",
+          "by": "Stavanger",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "tkris@webmail.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "456 78 901"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000008"
+      },
+      "navn": {
+        "fornavn": "Maria",
+        "etternavn": "Pettersen"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Technology Drive",
+          "gatenummer": "50",
+          "postnummer": "94043",
+          "by": "Mountain View, CA",
+          "landkode": "US"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "maria.p@techsolutions.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "1",
+          "telefonnummer": "(650) 555-8888"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000009"
+      },
+      "navn": {
+        "fornavn": "Jonas",
+        "etternavn": "Lien"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Bygdeveien",
+          "gatenummer": "12",
+          "postnummer": "2000",
+          "by": "Lillestrøm",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "jonaslien@online.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "ANNET",
+          "landskode": "47",
+          "telefonnummer": "921 21 212"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000010"
+      },
+      "navn": {
+        "fornavn": "Silje",
+        "etternavn": "Aas"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Åsveien",
+          "gatenummer": "7",
+          "postnummer": "5808",
+          "by": "Fyllingsdalen",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "siljeaas@gmx.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "410 00 100"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000011"
+      },
+      "navn": {
+        "fornavn": "Morten",
+        "etternavn": "Bjerke"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Vika Atrium",
+          "gatenummer": "5",
+          "postnummer": "0250",
+          "by": "Oslo",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "morten.bjerke@finance.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "47",
+          "telefonnummer": "240 50 600"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000012"
+      },
+      "navn": {
+        "fornavn": "Hanna",
+        "etternavn": "Dahl"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Fjellveien",
+          "gatenummer": "99",
+          "postnummer": "5099",
+          "by": "Bergen",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "hanna.dahl@gmail.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "911 22 334"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000013"
+      },
+      "navn": {
+        "fornavn": "Daniel",
+        "etternavn": "Eriksen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Strandgata",
+          "gatenummer": "2",
+          "postnummer": "3000",
+          "by": "Drammen",
+          "landkode": "NO"
+        },
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Næringsparken",
+          "gatenummer": "10",
+          "postnummer": "3000",
+          "by": "Drammen",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "daniel.eriksen@mail.com"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "490 00 990"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000014"
+      },
+      "navn": {
+        "fornavn": "Linda",
+        "etternavn": "Fjeld"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Rue de la Paix",
+          "gatenummer": "12",
+          "postnummer": "75002",
+          "by": "Paris",
+          "landkode": "FR"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "linda.fjeld@eurocorp.eu"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "33",
+          "telefonnummer": "1 42 68 00 00"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000015"
+      },
+      "navn": {
+        "fornavn": "Martin",
+        "etternavn": "Gundersen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Åttende Gate",
+          "gatenummer": "8",
+          "postnummer": "4300",
+          "by": "Sandnes",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "martin.g@online.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "970 00 700"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000016"
+      },
+      "navn": {
+        "fornavn": "Helene",
+        "etternavn": "Iversen"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "Gate 1",
+          "gatenummer": "2",
+          "postnummer": "5000",
+          "by": "Bergen",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "helene.iversen@media.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "47",
+          "telefonnummer": "55 11 22 33"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000017"
+      },
+      "navn": {
+        "fornavn": "Sverre",
+        "etternavn": "Johansen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Rådhusgata",
+          "gatenummer": "5",
+          "postnummer": "0100",
+          "by": "Oslo",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "sverre.johansen@fastmail.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "ANNET",
+          "landskode": "44",
+          "telefonnummer": "020 7555 1234"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000018"
+      },
+      "navn": {
+        "fornavn": "Elise",
+        "etternavn": "Knutsen"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "South Buena Vista Street",
+          "gatenummer": "500",
+          "postnummer": "91521",
+          "by": "Burbank, CA",
+          "landkode": "US"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "elise.knutsen@globaltech.us"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "1",
+          "telefonnummer": "(818) 555-4000"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000019"
+      },
+      "navn": {
+        "fornavn": "Olav",
+        "etternavn": "Larsen"
+      },
+      "adresser": [
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Postboks",
+          "gatenummer": "100",
+          "postnummer": "1750",
+          "by": "Halden",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "olav.larsen@yahoo.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "PRIVAT",
+          "landskode": "47",
+          "telefonnummer": "477 77 777"
+        }
+      ]
+    },
+    {
+      "id": {
+        "value": "10000000-0000-4000-8000-000000000020"
+      },
+      "navn": {
+        "fornavn": "Frida",
+        "etternavn": "Mikkelsen"
+      },
+      "adresser": [
+        {
+          "adressetype": "JOBB",
+          "gatenavn": "University Avenue",
+          "gatenummer": "10",
+          "postnummer": "94305",
+          "by": "Palo Alto, CA",
+          "landkode": "US"
+        },
+        {
+          "adressetype": "PRIVAT",
+          "gatenavn": "Hyttelia",
+          "gatenummer": "1",
+          "postnummer": "3500",
+          "by": "Hønefoss",
+          "landkode": "NO"
+        }
+      ],
+      "epostadresser": [
+        {
+          "epostadresse": "frida.mikkelsen@startup.com"
+        },
+        {
+          "epostadresse": "frida@home.no"
+        }
+      ],
+      "telefonnumre": [
+        {
+          "telefontype": "JOBB",
+          "landskode": "1",
+          "telefonnummer": "(650) 555-1212"
+        },
+        {
+          "telefontype": "ANNET",
+          "landskode": "47",
+          "telefonnummer": "930 30 300"
+        }
+      ]
+    }
+  ]
+}

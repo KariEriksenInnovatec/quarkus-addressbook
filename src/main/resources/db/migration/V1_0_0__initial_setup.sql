@@ -1,7 +1,20 @@
 -- CREATE SCHEMA ADRESSEBOK;
+CREATE SCHEMA IF NOT EXISTS ADRESSEBOK;
 SET search_path TO ADRESSEBOK; -- Apparently creates the schema as well
 
--- CREATE USER AB_USER WITH PASSWORD 'user123'; -- Should be used by application
+DO $$
+BEGIN
+   IF NOT EXISTS (
+      SELECT FROM pg_catalog.pg_roles
+      WHERE  rolname = 'ab_user'
+   ) THEN
+      CREATE ROLE ab_user LOGIN PASSWORD 'user123';
+   END IF;
+END $$;
+
+GRANT USAGE ON SCHEMA adressebok TO ab_user;
+GRANT INSERT,UPDATE,DELETE,SELECT  ON ALL TABLES IN SCHEMA adressebok TO ab_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA adressebok GRANT INSERT,UPDATE,DELETE,SELECT ON TABLES TO ab_user;
 
 CREATE TABLE ADRESSEBOK(
   adressebok_id UUID        PRIMARY KEY,
@@ -15,7 +28,8 @@ CREATE TABLE KONTAKT(
   oppdatert_tid TIMESTAMPTZ  DEFAULT NOW() NOT NULL,
   fornavn       TEXT        NOT NULL,
   etternavn     TEXT        NOT NULL,
-  adressebok_id	UUID 		NOT NULL REFERENCES ADRESSEBOK(adressebok_id)
+  adressebok_id	UUID 		NOT NULL REFERENCES ADRESSEBOK(adressebok_id) ON DELETE CASCADE,
+  checksum		TEXT		NOT NULL
 );
 
 CREATE TABLE ADRESSE_TYPE(
@@ -34,12 +48,12 @@ CREATE TABLE ADRESSE(
   postnummer    TEXT        NOT NULL,
   sted          TEXT        NOT NULL,
   land          TEXT        NOT NULL,
-  kontakt_id    UUID        NOT NULL REFERENCES KONTAKT(kontakt_id)
+  kontakt_id    UUID        NOT NULL REFERENCES KONTAKT(kontakt_id) ON DELETE CASCADE
 );
 
 CREATE TABLE EPOST(
   epostadresse  TEXT        NOT NULL,
-  kontakt_id    UUID        NOT NULL REFERENCES KONTAKT(kontakt_id)
+  kontakt_id    UUID        NOT NULL REFERENCES KONTAKT(kontakt_id) ON DELETE CASCADE
 );
 
 CREATE TABLE TELEFON_TYPE(
@@ -56,5 +70,5 @@ CREATE TABLE TELEFON(
   telefon_type   TEXT        NOT NULL REFERENCES TELEFON_TYPE(kode),
   landskode     TEXT        NOT NULL,  
   telefonnummer TEXT        NOT NULL,
-  kontakt_id    UUID        NOT NULL REFERENCES KONTAKT(kontakt_id)
+  kontakt_id    UUID        NOT NULL REFERENCES KONTAKT(kontakt_id) ON DELETE CASCADE
 );

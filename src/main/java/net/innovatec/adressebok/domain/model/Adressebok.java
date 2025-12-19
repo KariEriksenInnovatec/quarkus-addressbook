@@ -23,8 +23,7 @@ public class Adressebok {
 	}
         
     private void leggTilKontakt(KontaktId id, KontaktData data) {
-        if( kontakter.size() > 100) throw new DomeneException("Man kan ikke ha mer enn 100 kontakter i adressebok!");
-        if( finnesNavn(data.navn())) throw new DomeneException("Kan ikke legge til kontakt med navn som allerede finnes!");
+        if( finnesNavn(id, data.navn())) throw new DomeneException("Kan ikke legge til kontakt med navn som allerede finnes!");
         kontakter.put(id, data);
     }
 
@@ -32,8 +31,8 @@ public class Adressebok {
         leggTilKontakt(kontakt.hentId(), kontakt.hentData());
     }
 
-    private Boolean finnesNavn(Navn navn) {
-		return hentKontakter().stream().anyMatch(k -> k.hentNavn().equals(navn));
+    private Boolean finnesNavn(KontaktId id, Navn navn) {
+		return hentKontakter().stream().filter(k -> !k.hentId().equals(id)).anyMatch(k -> k.hentNavn().equals(navn));
 	}
 	
 	public List<Kontakt> hentKontakter() {
@@ -47,8 +46,8 @@ public class Adressebok {
 
 	public void oppdatereKontakt(KontaktId id, KontaktData data) {
         if( !kontakter.keySet().contains(id)) throw new IkkeFunnetDomeneException("Angitt KontaktId ikke funnet!", Optional.of(this.id), Optional.of(id));
-	    Kontakt kontakt = Kontakt.createNewKontakt(id, data);
-	    leggTilKontakt(kontakt);	    
+        if( finnesNavn(id, data.navn())) throw new DomeneException("Kan ikke endre navn til en som allerede eksisterer på en annen kontakt!");
+        kontakter.put(id, data);
 	}
 
 	public Boolean slettKontakt(KontaktId id) {

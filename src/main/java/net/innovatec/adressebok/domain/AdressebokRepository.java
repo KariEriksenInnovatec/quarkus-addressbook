@@ -4,9 +4,9 @@ import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
 
 public interface AdressebokRepository {
-	public Adressebok opprettAdressBok();
+	public Adressebok opprettAdressebok();
 
-	public AdressebokId leggTilAdressebok(Adressebok bok);
+	public AdressebokId lagreAdressebok(Adressebok bok);
 	
 	public Adressebok hentAdressebok(String uuid);
 
