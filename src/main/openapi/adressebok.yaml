@@ -9,7 +9,7 @@ info:
   description: |
     Dette er et API for en enkel adressebok.
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:3000
     description: localhost.
 paths:
   /adressebok:

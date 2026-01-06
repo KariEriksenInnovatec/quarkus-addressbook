@@ -27,6 +27,12 @@
 		<db.url>jdbc:postgresql://localhost:5432/innovatec</db.url>
 		<db.username>admin</db.username>
 		<db.password>admin123</db.password>
+		<quarkus.native.executable-name>adressebok-api</quarkus.native.executable-name>
+		<quarkus.native.container-build>false</quarkus.native.container-build>
+		<quarkus.native.local-build>true</quarkus.native.local-build>
+		<!-- <quarkus.native.builder-image>quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1</quarkus.native.builder-image> -->
+		<!-- Ensure GraalVM is used locally -->
+    	<!-- <quarkus.native.builder-image></quarkus.native.builder-image>		 -->
 	</properties>
 
 	<dependencyManagement>
@@ -90,26 +96,28 @@
       <artifactId>flyway-database-postgresql</artifactId>
     </dependency>		
 		<!-- It seems that this Quarkus plug-in doesn't play nice with Flyway. -->
-<!--		<dependency>
-			<groupId>io.quarkiverse.jooq</groupId>
-			<artifactId>quarkus-jooq</artifactId>
-			<version>${quarkus-jooq.version}</version>
-		</dependency>
--->		
+	<dependency>
+		<groupId>io.quarkiverse.jooq</groupId>
+		<artifactId>quarkus-jooq</artifactId>
+		<version>${quarkus-jooq.version}</version>
+	</dependency>		
     <dependency>
       <groupId>org.jooq</groupId>
       <artifactId>jooq</artifactId>
       <version>${jooq.version}</version>
+	  <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jooq</groupId>
       <artifactId>jooq-meta</artifactId>
       <version>${jooq.version}</version>
+	  <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jooq</groupId>
       <artifactId>jooq-codegen</artifactId>
       <version>${jooq.version}</version>
+	  <scope>provided</scope>
     </dependency>
     <dependency>
 			<groupId>io.quarkus</groupId>

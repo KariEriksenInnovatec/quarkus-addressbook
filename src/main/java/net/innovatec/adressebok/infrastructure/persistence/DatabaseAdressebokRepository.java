@@ -1,7 +1,12 @@
 package net.innovatec.adressebok.infrastructure.persistence;
 
-import static net.innovatec.adressebok.dao.Tables.*;
-import static org.jooq.impl.DSL.*;
+import static net.innovatec.adressebok.dao.Tables.ADRESSE;
+import static net.innovatec.adressebok.dao.Tables.ADRESSEBOK_;
+import static net.innovatec.adressebok.dao.Tables.EPOST;
+import static net.innovatec.adressebok.dao.Tables.KONTAKT;
+import static net.innovatec.adressebok.dao.Tables.TELEFON;
+import static org.jooq.impl.DSL.multiset;
+import static org.jooq.impl.DSL.select;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.OffsetDateTime;
@@ -14,20 +19,20 @@ import org.jooq.DSLContext;
 import org.jooq.Records;
 
 import io.quarkus.logging.Log;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import net.innovatec.adressebok.domain.AdressebokRepository;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
-import net.innovatec.adressebok.domain.model.DomeneException;
 import net.innovatec.adressebok.domain.model.IkkeFunnetDomeneException;
 import net.innovatec.adressebok.domain.model.KontaktId;
 import net.innovatec.adressebok.domain.model.Navn;
 import net.innovatec.adressebok.infrastructure.util.ChecksumUtil;
 
 public class DatabaseAdressebokRepository implements AdressebokRepository {
+    @Inject
     DSLContext ctx;
-    private ChecksumUtil util = new ChecksumUtil();
-
+    
     public DatabaseAdressebokRepository(DSLContext ctx) {
         this.ctx = ctx;
     }

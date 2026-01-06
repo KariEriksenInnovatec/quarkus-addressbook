@@ -57,21 +57,26 @@ public class AdressebokResourceImpl implements AdressebokResource {
 
     @Override
     public Response eksporterAdressebok(@Valid @NotNull String adressebokId) {
-        try {
+        // try {
             net.innovatec.adressebok.domain.model.Adressebok domainAdressebok = service
                     .hentAdressebok(mapper.stringToAdressebokId(adressebokId));
 
             Adressebok dtoAdressebok = mapper.toDto(domainAdressebok);
-            File file;
+            /*File file;
             file = File.createTempFile("adressebok_" + adressebokId, ".json");
             objectMapper.writeValue(file, dtoAdressebok);
 
-            return Response.ok(file).header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"")
+            return Response.ok(dtoAdressebok).header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"")
                     .header("Content-Type", Files.probeContentType(file.toPath())) // Automatically detect content type
                     .build();
-        } catch (IOException e) {
+            */
+            return Response.ok(dtoAdressebok)  // Direct JSON, no File
+                .header("Content-Disposition", "attachment; filename=\"adressebok_" + adressebokId + ".json\"")
+                .header("Content-Type", "application/json")
+                .build();                    
+        /* } catch (IOException e) {
             throw new RuntimeException("Failed to write adressebok to file", e);
-        }
+        }*/
     }
 
     @Override
