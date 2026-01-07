@@ -6,10 +6,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import net.innovatec.adressebok.domain.AdressebokRepo;
 import net.innovatec.adressebok.domain.AdressebokService;
-import net.innovatec.adressebok.domain.model.AdresseType;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.Kontakt;
-import net.innovatec.adressebok.domain.model.TelefonType;
 
 @ApplicationScoped
 public class AdressebokServiceImpl implements AdressebokService {
@@ -56,12 +54,8 @@ public class AdressebokServiceImpl implements AdressebokService {
     }
 
     @Override
-    public Kontakt oppdaterKontakt(String adressebokId, String kontaktId, AdresseType adresseType, String gatenavn,
-            String gatenummer, String postnummer,
-            String by,
-            String land, String epostAdresse, TelefonType telefonType, String telefonnummer) {
-        return repo.oppdaterKontakt(adressebokId, kontaktId, adresseType, gatenavn, gatenummer, postnummer, by, land,
-                epostAdresse, telefonType, telefonnummer);
+    public Kontakt oppdaterKontakt(String adressebokId, String kontaktId, Kontakt oppdatertKontaktData) {
+        return repo.oppdaterKontakt(adressebokId, kontaktId, oppdatertKontaktData);
     }
 
     @Override

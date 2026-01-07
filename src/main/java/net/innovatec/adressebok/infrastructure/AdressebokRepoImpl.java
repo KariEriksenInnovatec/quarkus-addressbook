@@ -6,12 +6,10 @@ import java.util.UUID;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import net.innovatec.adressebok.domain.AdressebokRepo;
-import net.innovatec.adressebok.domain.model.AdresseType;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
 import net.innovatec.adressebok.domain.model.Kontakt;
 import net.innovatec.adressebok.domain.model.Navn;
-import net.innovatec.adressebok.domain.model.TelefonType;
 
 @ApplicationScoped
 public class AdressebokRepoImpl implements AdressebokRepo {
@@ -104,17 +102,57 @@ public class AdressebokRepoImpl implements AdressebokRepo {
     }
 
     @Override
-    public Kontakt oppdaterKontakt(String adressebokId, String kontaktId, AdresseType adresseType, String gatenavn,
-            String gatenummer, String postnummer,
-            String by,
-            String land, String epost, TelefonType telefonType, String telefonnummer) {
+    public Kontakt oppdaterKontakt(String adressebokId, String kontaktId, Kontakt oppdatertKontaktData) {
 
-        Kontakt kontakt = hentKontakt(adressebokId, kontaktId);
-        kontakt.opprettAdresse(adresseType, gatenavn, gatenummer, postnummer, by, land);
-        kontakt.opprettEpost(epost);
-        kontakt.opprettTelefon(telefonType, telefonnummer);
+        // Hent eksisterende kontakt
+        Kontakt eksisterendeKontakt = hentKontakt(adressebokId, kontaktId);
 
-        return kontakt;
+        // Oppdater navn hvis det er endret
+        if (oppdatertKontaktData.hentNavn() != null) {
+            eksisterendeKontakt.settNavn(oppdatertKontaktData.hentNavn());
+        }
+
+        // Slett alle eksisterende adresser
+        List<net.innovatec.adressebok.domain.model.Adresse> eksisterendeAdresser = new ArrayList<>(eksisterendeKontakt.getAdresser());
+        for (net.innovatec.adressebok.domain.model.Adresse adresse : eksisterendeAdresser) {
+            eksisterendeKontakt.slettAdresse(adresse);
+        }
+
+        // Legg til nye adresser fra oppdatert data
+        for (net.innovatec.adressebok.domain.model.Adresse nyAdresse : oppdatertKontaktData.getAdresser()) {
+            eksisterendeKontakt.opprettAdresse(
+                nyAdresse.adresseType(),
+                nyAdresse.gatenavn(),
+                nyAdresse.gatenummer(),
+                nyAdresse.postnummer(),
+                nyAdresse.by(),
+                nyAdresse.land()
+            );
+        }
+
+        // Slett alle eksisterende epost
+        List<net.innovatec.adressebok.domain.model.Epost> eksisterendeEpost = new ArrayList<>(eksisterendeKontakt.getEpost());
+        for (net.innovatec.adressebok.domain.model.Epost epost : eksisterendeEpost) {
+            eksisterendeKontakt.slettEpost(epost);
+        }
+
+        // Legg til nye epost fra oppdatert data
+        for (net.innovatec.adressebok.domain.model.Epost nyEpost : oppdatertKontaktData.getEpost()) {
+            eksisterendeKontakt.opprettEpost(nyEpost.epostAdresse());
+        }
+
+        // Slett alle eksisterende telefoner
+        List<net.innovatec.adressebok.domain.model.Telefon> eksisterendeTelefoner = new ArrayList<>(eksisterendeKontakt.getTelefon());
+        for (net.innovatec.adressebok.domain.model.Telefon telefon : eksisterendeTelefoner) {
+            eksisterendeKontakt.slettTelefon(telefon);
+        }
+
+        // Legg til nye telefoner fra oppdatert data
+        for (net.innovatec.adressebok.domain.model.Telefon nyTelefon : oppdatertKontaktData.getTelefon()) {
+            eksisterendeKontakt.opprettTelefon(nyTelefon.telefonType(), nyTelefon.telefonnummer());
+        }
+
+        return eksisterendeKontakt;
     }
 
     @Override

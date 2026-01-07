@@ -9,13 +9,11 @@ import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.Path;
 import net.innovatec.adressebok.AdressebokerResource;
 import net.innovatec.adressebok.api.mapper.AdressebokMapper;
-import net.innovatec.adressebok.beans.AdresseType;
 import net.innovatec.adressebok.beans.AdressebokMedKontakterResponse;
 import net.innovatec.adressebok.beans.AdressebokResponse;
 import net.innovatec.adressebok.beans.KontaktResponse;
 import net.innovatec.adressebok.beans.OppdaterKontaktRequest;
 import net.innovatec.adressebok.beans.OpprettKontaktRequest;
-import net.innovatec.adressebok.beans.TelefonType;
 import net.innovatec.adressebok.domain.AdressebokService;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.Kontakt;
@@ -96,29 +94,18 @@ public class AdressebokerResourceImpl implements AdressebokerResource {
     public KontaktResponse oppdaterKontakt(String adressebokId, String kontaktId,
             @NotNull OppdaterKontaktRequest data) {
 
-        AdresseType adresseType = data.getAdresser().get(0).getAdresseType();
-        net.innovatec.adressebok.domain.model.AdresseType domeneAdresseType = net.innovatec.adressebok.domain.model.AdresseType
-                .valueOf(adresseType.name());
+        // Bruk mapperen til å bygge den oppdaterte kontakten med all data
+        Kontakt oppdatertKontaktData = mapper.toKontakt(data, kontaktId);
 
-        String gatenavn = data.getAdresser().get(0).getGatenavn();
-        String gatenummer = data.getAdresser().get(0).getGatenummer();
-        String postnummer = data.getAdresser().get(0).getPostnummer();
-        String by = data.getAdresser().get(0).getBy();
-        String land = data.getAdresser().get(0).getLand();
-        String epost = data.getEpost().get(0).getEpostAdresse();
-        TelefonType telefonType = data.getTelefon().get(0).getTelefonType();
-        net.innovatec.adressebok.domain.model.TelefonType domeTelefonType = net.innovatec.adressebok.domain.model.TelefonType
-                .valueOf(telefonType.name());
-        String telfonnummer = data.getTelefon().get(0).getTelefonnummer();
-        Kontakt kontakt = service.oppdaterKontakt(adressebokId, kontaktId, domeneAdresseType, gatenavn, gatenummer, postnummer, by,
-                land, epost, domeTelefonType, telfonnummer);
+        // Send den til service-laget for å erstatte eksisterende kontakt
+        Kontakt kontakt = service.oppdaterKontakt(adressebokId, kontaktId, oppdatertKontaktData);
 
         return mapper.toKontaktResponse(kontakt);
     }
 
     @Override
     public void slettKontakt(String adressebokId, String kontaktId) {
-        
+
         service.slettKontakt(adressebokId, kontaktId);
     }
 

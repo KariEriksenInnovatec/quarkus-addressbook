@@ -2,10 +2,8 @@ package net.innovatec.adressebok.domain;
 
 import java.util.List;
 
-import net.innovatec.adressebok.domain.model.AdresseType;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.Kontakt;
-import net.innovatec.adressebok.domain.model.TelefonType;
 
 public interface AdressebokRepo {
 
@@ -23,10 +21,7 @@ public interface AdressebokRepo {
 
     public Kontakt hentKontakt(String adressebokId, String kontaktId);
 
-    public Kontakt oppdaterKontakt(String adressebokId, String kontaktId, AdresseType adresseType, String gatenavn,
-            String gatenummer, String postnummer,
-            String by,
-            String land, String epostAdresse, TelefonType telefonType, String telefonnummer);
+    public Kontakt oppdaterKontakt(String adressebokId, String kontaktId, Kontakt oppdatertKontaktData);
 
     public void slettKontakt(String adressebokId, String kontaktId);
 }
