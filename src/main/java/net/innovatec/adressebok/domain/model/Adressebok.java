@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import net.innovatec.adressebok.api.exception.DuplikatKontaktException;
+import net.innovatec.adressebok.api.exception.UgyldigIdException;
+
 public final class Adressebok {
 
     // AdressebokId blir håntert av repo i infrastrukturlaget
@@ -43,16 +46,17 @@ public final class Adressebok {
         Navn navn = kontakt.hentNavn();
 
         if (id == null || navn == null) {
-            throw new IllegalArgumentException(
-                    "KontaktId og navn er påkrevd for å legge til en eksisterende kontakt.");
+
+            String idString = new String(id.toString());
+            String navnString = new String(navn.toString());
+            throw new UgyldigIdException(idString, navnString);
         }
 
         // Sjekk om det allerede finnes en kontakt med samme navn
         for (Kontakt eksisterendeKontakt : kontakter) {
             Navn eksisterendeNavn = eksisterendeKontakt.hentNavn();
             if (eksisterendeNavn.equals(navn)) {
-                throw new IllegalArgumentException(
-                        "En kontakt med navnet " + navn.fornavn() + " " + navn.etternavn() + " finnes allerede.");
+                throw new DuplikatKontaktException(eksisterendeNavn);
             }
         }
         kontakter.add(kontakt);

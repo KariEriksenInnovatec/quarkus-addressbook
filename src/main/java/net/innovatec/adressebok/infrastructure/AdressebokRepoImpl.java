@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import net.innovatec.adressebok.api.exception.AdressebokIkkeFunnetException;
+import net.innovatec.adressebok.api.exception.KontaktIkkeFunnetException;
 import net.innovatec.adressebok.domain.AdressebokRepo;
 import net.innovatec.adressebok.domain.model.Adressebok;
 import net.innovatec.adressebok.domain.model.AdressebokId;
 import net.innovatec.adressebok.domain.model.Kontakt;
+import net.innovatec.adressebok.domain.model.KontaktId;
 import net.innovatec.adressebok.domain.model.Navn;
 
 @ApplicationScoped
@@ -48,8 +51,9 @@ public class AdressebokRepoImpl implements AdressebokRepo {
                 return adressebok;
             }
         }
+        AdressebokId id = new AdressebokId(UUID.fromString(adressebokId));
         // Hvis ikke funnet, kast exception
-        throw new RuntimeException("Adressebok med id " + adressebokId + " ble ikke funnet");
+        throw new AdressebokIkkeFunnetException(id);
     }
 
     @Override
@@ -63,8 +67,9 @@ public class AdressebokRepoImpl implements AdressebokRepo {
                 adresseboker.remove(i);
 
             }
+            AdressebokId id = new AdressebokId(UUID.fromString(adressebokId));
             // Hvis ikke funnet, kast exception
-            throw new RuntimeException("Adressebok med id " + adressebokId + " ble ikke funnet");
+            throw new AdressebokIkkeFunnetException(id);
         }
     }
 
@@ -98,7 +103,9 @@ public class AdressebokRepoImpl implements AdressebokRepo {
                 return kontakt;
             }
         }
-        throw new RuntimeException("Kontakt med id " + kontaktId + " ble ikke funnet");
+
+        KontaktId id = new KontaktId(UUID.fromString(kontaktId));
+        throw new KontaktIkkeFunnetException(id);
     }
 
     @Override
@@ -113,7 +120,8 @@ public class AdressebokRepoImpl implements AdressebokRepo {
         }
 
         // Slett alle eksisterende adresser
-        List<net.innovatec.adressebok.domain.model.Adresse> eksisterendeAdresser = new ArrayList<>(eksisterendeKontakt.getAdresser());
+        List<net.innovatec.adressebok.domain.model.Adresse> eksisterendeAdresser = new ArrayList<>(
+                eksisterendeKontakt.getAdresser());
         for (net.innovatec.adressebok.domain.model.Adresse adresse : eksisterendeAdresser) {
             eksisterendeKontakt.slettAdresse(adresse);
         }
@@ -121,17 +129,17 @@ public class AdressebokRepoImpl implements AdressebokRepo {
         // Legg til nye adresser fra oppdatert data
         for (net.innovatec.adressebok.domain.model.Adresse nyAdresse : oppdatertKontaktData.getAdresser()) {
             eksisterendeKontakt.opprettAdresse(
-                nyAdresse.adresseType(),
-                nyAdresse.gatenavn(),
-                nyAdresse.gatenummer(),
-                nyAdresse.postnummer(),
-                nyAdresse.by(),
-                nyAdresse.land()
-            );
+                    nyAdresse.adresseType(),
+                    nyAdresse.gatenavn(),
+                    nyAdresse.gatenummer(),
+                    nyAdresse.postnummer(),
+                    nyAdresse.by(),
+                    nyAdresse.land());
         }
 
         // Slett alle eksisterende epost
-        List<net.innovatec.adressebok.domain.model.Epost> eksisterendeEpost = new ArrayList<>(eksisterendeKontakt.getEpost());
+        List<net.innovatec.adressebok.domain.model.Epost> eksisterendeEpost = new ArrayList<>(
+                eksisterendeKontakt.getEpost());
         for (net.innovatec.adressebok.domain.model.Epost epost : eksisterendeEpost) {
             eksisterendeKontakt.slettEpost(epost);
         }
@@ -142,7 +150,8 @@ public class AdressebokRepoImpl implements AdressebokRepo {
         }
 
         // Slett alle eksisterende telefoner
-        List<net.innovatec.adressebok.domain.model.Telefon> eksisterendeTelefoner = new ArrayList<>(eksisterendeKontakt.getTelefon());
+        List<net.innovatec.adressebok.domain.model.Telefon> eksisterendeTelefoner = new ArrayList<>(
+                eksisterendeKontakt.getTelefon());
         for (net.innovatec.adressebok.domain.model.Telefon telefon : eksisterendeTelefoner) {
             eksisterendeKontakt.slettTelefon(telefon);
         }
@@ -166,7 +175,8 @@ public class AdressebokRepoImpl implements AdressebokRepo {
                 kontakter.remove(i);
 
             }
-            throw new RuntimeException("Kontakt med id " + kontaktId + " ble ikke funnet");
+            KontaktId id = new KontaktId(UUID.fromString(kontaktId));
+            throw new KontaktIkkeFunnetException(id);
         }
     }
 }
